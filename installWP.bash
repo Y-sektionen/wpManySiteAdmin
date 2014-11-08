@@ -8,6 +8,9 @@ then
 	exit 1
 fi
 
+# cd to script dir
+cd "$(dirname $0)"
+
 userName=$1
 fullURL=$2
 userPassword=$(echo -n $RANDOM | md5sum | awk {'print $1'})
@@ -25,12 +28,17 @@ echo ""
 
 # Create folder for, and install, Wordpress
 mkdir -p $installDir
-chown $userName $installDir
+chown $userName:www-data $installDir
+chmod 750 $installDir
 
 su - $userName -c "cd $installDir 
 wp core download --locale=sv_SE
 wp core config --dbname=$userName --dbuser=$userName --dbpass=$userPassword --locale=sv_SE
 wp core install --url=$fullURL --title='$userName website' --admin_user=cydadmin --admin_password=$wpAdminPassword --admin_email=admin@cyd.liu.se"
+
+# Create config files for nginx and uwsgi
+./nginx.bash $userName $fullURL
+./uwsgi.bash $userName
 
 echo ""
 echo "This is the password for MySQL- and system user $userName:"
