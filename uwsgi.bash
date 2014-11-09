@@ -41,5 +41,5 @@ EOF
 
 ln -s $configFile /etc/uwsgi/apps-enabled/
 
-service uwsgi reload
+service uwsgi restart
 

@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 if [[ $# != 2 || $S1 == "-h" || $S1 == "--help" ]]
 then
