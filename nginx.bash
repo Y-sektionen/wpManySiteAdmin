@@ -26,11 +26,13 @@ server {
   index index.php index.html index.htm;
 
   location ~ \.php$ {
-    include uwsgi_params;
-    uwsgi_modifier1 14;
-    uwsgi_pass unix:/run/uwsgi/app/$userName/socket;
+    try_files \$uri =404;
+    fastcgi_pass unix:/var/run/php5-fpm/$userName.sock;
+    fastcgi_index index.php;
+    include fastcgi_params;
   }
 }
+
 EOF
 
 ln -s $configFile /etc/nginx/sites-enabled

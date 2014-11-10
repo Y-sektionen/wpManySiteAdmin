@@ -37,7 +37,7 @@ wp core install --url=$fullURL --title='$userName website' --admin_user=cydadmin
 
 # Create config files for nginx and uwsgi
 ./nginx.bash $userName $fullURL
-./uwsgi.bash $userName
+./php5-fpm.bash $userName
 
 echo ""
 echo "This is the password for MySQL- and system user $userName:"
