@@ -25,7 +25,7 @@ CREATE USER '$userName'@localhost IDENTIFIED BY '$userPassword';
 GRANT ALL PRIVILEGES ON $userName . * TO '$userName'@'localhost';"
 echo ""
 
-# Create folder for, and install, Wordpress
+# Create folder for, and install, Wordpress + AD plugin
 mkdir -p $installDir
 chown $userName:www-data $installDir
 chmod 750 $installDir
@@ -33,7 +33,9 @@ chmod 750 $installDir
 su - $userName -c "cd $installDir 
 wp core download --locale=sv_SE
 wp core config --dbname=$userName --dbuser=$userName --dbpass=$userPassword --locale=sv_SE
-wp core install --url=$fullURL --title='$userName website' --admin_user=cydadmin --admin_password=$wpAdminPassword --admin_email=admin@cyd.liu.se"
+wp core install --url=$fullURL --title='$userName website' --admin_user=cydadmin --admin_password=$wpAdminPassword --admin_email=admin@cyd.liu.se
+wp plugin install active-directory-integration
+wp plugin activate active-directory-integration"
 
 # Create config files for nginx and uwsgi
 ./nginx.bash $userName $fullURL
