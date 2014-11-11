@@ -17,11 +17,27 @@ source $config
 
 for userName in $userNames
 do
-	echo "Updating site for user $userName..."
-	su - $userName -c "cd $basePath/$userName
-wp core update
+    echo "Checking install $userName for minor update..."
+    cd $basePath/$userName
+    wp core check-update --allow-root | grep "minor"
+
+    if [ $? == 0 ]
+    then
+        echo ""
+        echo "Updating site for user $userName..."
+        su - $userName -c "cd $basePath/$userName
+wp core update --version=$(wp core check-update | grep minor | awk {'print $1'})
 wp core update-db
 wp plugin update --all"
+    else
+        echo "No minor update found for WP site $userName"
+        wp core check-update --allow-root | grep "major"
+        if [ $? == 0 ]
+        then
+            echo ""
+            echo "MAJOR UPDATE AVAILABLE FOR $userName"
+        fi
+    fi
 	echo ""
 done
 

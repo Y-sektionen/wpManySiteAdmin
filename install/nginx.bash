@@ -11,6 +11,7 @@ userName=$1
 fullURL=$2
 configFile=/etc/nginx/sites-available/$fullURL
 
+# Create configfolder+file
 mkdir -p /var/log/nginx/$fullURL
 touch $configFile
 
@@ -35,7 +36,7 @@ server {
 
 EOF
 
+# Activate site
 ln -s $configFile /etc/nginx/sites-enabled
-
 service nginx reload
 
