@@ -20,7 +20,8 @@ do
 	echo "Updating site for user $userName..."
 	su - $userName -c "cd $basePath/$userName
 wp core update
-wp core update-db"
+wp core update-db
+wp plugin update --all"
 	echo ""
 done
 
