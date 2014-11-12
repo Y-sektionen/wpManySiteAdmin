@@ -27,8 +27,7 @@ do
         echo "Updating site for user $userName..."
         su - $userName -c "cd $basePath/$userName
 wp core update --version=$(wp core check-update | grep minor | awk {'print $1'})
-wp core update-db
-wp plugin update --all"
+wp core update-db"
     else
         echo "No minor update found for WP site $userName"
         wp core check-update --allow-root | grep "major"
@@ -38,6 +37,11 @@ wp plugin update --all"
             echo "MAJOR UPDATE AVAILABLE FOR $userName"
         fi
     fi
+
+    # Update all plugins as well
+    echo "Updating plugins for $userName"
+    wp plugin update --all
+
 	echo ""
 done
 
