@@ -21,8 +21,7 @@ listen = /var/run/php5-fpm/$userName.sock
 listen.owner = $userName
 listen.group = www-data
 listen.mode = 770
-; Jail app pool to content-dir
-chroot = /srv/$userName/
+chdir = /srv/$userName/
 pm = ondemand
 pm.max_children = 4
 
