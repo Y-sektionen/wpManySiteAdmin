@@ -22,13 +22,13 @@ server {
   error_log /var/log/nginx/$fullURL/error.log;
   access_log /var/log/nginx/$fullURL/access.log;
 
-  root /srv/$userName;
+  root /srv/$fullURL/wordpress;
 
   index index.php index.html index.htm;
 
   location ~ \.php$ {
     try_files \$uri =404;
-    fastcgi_pass unix:/var/run/php5-fpm/$userName.sock;
+    fastcgi_pass unix:/srv/$fullURL/socket/$fullURL.sock;
     fastcgi_index index.php;
     include fastcgi_params;
   }

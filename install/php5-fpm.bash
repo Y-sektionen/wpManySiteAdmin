@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ $# != 1 ]]
+if [[ $# != 2 ]]
 then
         echo "Usage: "
         echo "  $0 userName"
@@ -8,26 +8,27 @@ then
 fi
 
 userName=$1
-configFile=/etc/php5/fpm/pool.d/$userName.conf
+fullURL=$2
+configFile=/etc/php5/fpm/pool.d/$fullURL.conf
 
 # Create conf for app pool
 touch $configFile
 
 cat > $configFile << EOF
-[$userName]
+[$fullURL]
 user = $userName
 group = $userName
-listen = /var/run/php5-fpm/$userName.sock
+listen = /srv/$fullURL/socket/$fullURL.sock
 listen.owner = $userName
 listen.group = www-data
 listen.mode = 770
-chdir = /srv/$userName/
+chroot = /srv/$fullURL/
+chdir = wordpress
 pm = ondemand
 pm.max_children = 4
 
 EOF
 
 # Activate app pool
-ln -s $configFile /etc/uwsgi/apps-enabled/
 service php5-fpm restart
 
