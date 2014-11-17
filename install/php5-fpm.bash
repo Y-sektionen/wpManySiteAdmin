@@ -23,7 +23,7 @@ listen.owner = $userName
 listen.group = www-data
 listen.mode = 770
 chroot = /srv/$fullURL/
-chdir = wordpress
+chdir = /wordpress
 pm = ondemand
 pm.max_children = 4
 
