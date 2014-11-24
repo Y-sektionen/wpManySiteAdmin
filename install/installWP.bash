@@ -15,8 +15,7 @@ userName=$1
 fullURL=$2
 userPassword=$(echo -n $RANDOM | md5sum | awk {'print $1'})
 wpAdminPassword=$(echo -n $RANDOM | md5sum | awk {'print $1'})
-userDir=/srv/$fullURL
-installDir=$userDir/wordpress
+installDir=/srv/$fullURL
 
 # Create user in Linux and MySQL
 useradd -p $(echo $userPassword | openssl passwd -1 -stdin) $userName
@@ -27,13 +26,11 @@ CREATE USER '$userName'@localhost IDENTIFIED BY '$userPassword';
 GRANT ALL PRIVILEGES ON $userName . * TO '$userName'@'localhost';"
 echo ""
 
-# Create folders for socket and WP. www-data in user group and correct permissions for server to run
+# Create folders for WP. www-data in user group and correct permissions for server to run
 mkdir -p $installDir
-mkdir -p $userDir/socket
 chown -R $userName:$userName $userDir
 usermod -aG $userName www-data
 chmod -R 750 $userDir
-chmod 770 $userDir/socket
 chmod -R g+s $userDir
 
 echo "Installing Wordpress + AD-plugin"
