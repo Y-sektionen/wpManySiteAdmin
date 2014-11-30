@@ -16,14 +16,14 @@ touch $configFile
 
 cat > $configFile << EOF
 [$fullURL]
+prefix = /
 user = $userName
 group = $userName
-listen = /srv/$fullURL/socket/$fullURL.sock
+listen = /var/run/php5-fpm/$fullURL.sock
 listen.owner = $userName
 listen.group = www-data
 listen.mode = 770
-chroot = /srv/$fullURL/
-chdir = /wordpress
+chdir = /srv/$fullURL
 pm = ondemand
 pm.max_children = 4
 
