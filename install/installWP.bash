@@ -29,7 +29,7 @@ echo ""
 mkdir -p $installDir
 chown -R $userName:$userName $installDir
 usermod -aG $userName www-data
-chmod -R 750 $installDir
+chmod -R 770 $installDir
 chmod -R g+s $installDir
 
 echo "Installing Wordpress + AD-plugin"
