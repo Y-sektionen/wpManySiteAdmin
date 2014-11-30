@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 if [[ $# != 2 || $S1 == "-h" || $S1 == "--help" ]]
 then
@@ -28,17 +27,17 @@ echo ""
 
 # Create folders for WP. www-data in user group and correct permissions for server to run
 mkdir -p $installDir
-chown -R $userName:$userName $userDir
+chown -R $userName:$userName $installDir
 usermod -aG $userName www-data
-chmod -R 750 $userDir
-chmod -R g+s $userDir
+chmod -R 750 $installDir
+chmod -R g+s $installDir
 
 echo "Installing Wordpress + AD-plugin"
 # Install Wordpress + AD plugin using wp-cli
 su - $userName -c "cd $installDir 
 wp core download --locale=sv_SE
 wp core config --dbname=$userName --dbuser=$userName --dbpass=$userPassword --locale=sv_SE
-wp core install --url=$fullURL --title='$userName website' --admin_user=cydadmin --admin_password=$wpAdminPassword --admin_email=admin@cyd.liu.se
+wp core install --url=$fullURL --title='$userName website' --admin_user=cydadmin --admin_password=$wpAdminPassword --admin_email=logs@cyd.liu.se
 wp plugin install active-directory-integration
 wp plugin activate active-directory-integration"
 echo ""
