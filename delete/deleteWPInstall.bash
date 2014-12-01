@@ -21,6 +21,6 @@ rm /etc/nginx/sites-available/$fullURL
 rm /etc/php5/fpm/pool.d/"$fullURL".conf
 
 # Remove WP-install
-rm -r /srv/$fullURL
+rm -r /srv/$userName
 
 
