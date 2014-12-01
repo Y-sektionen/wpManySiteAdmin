@@ -5,7 +5,7 @@ Scripts for simplified installation, maintaining and ending/deletion of Wordpres
 
 ## License
 
-´´´
+```
 CYD-poolen - wp-cli - Scripts for simplified installation, maintaining and ending/deletion of Wordpress sites. Copyright (C) 2014 CYD-poolen, Linköping University.
 
 This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-´´´
+```
 
 ## Requirements
 
