@@ -3,7 +3,7 @@ CYD-poolen - wp-cli
 
 Scripts for simplified installation, maintaining and ending/deletion of Wordpress sites. 
 
-h1. Requirements
+## Requirements
 
 These scripts are dependent on three components
 
@@ -38,7 +38,7 @@ Then install wp-cli from the projects Github page (preferable using .deb-package
 sudo dpkg -i FILE.deb
 </pre>
 
-h1. Installing a Wordpress site
+## Installing a Wordpress site
 
 Run the script installWP.bash with username and FQDN as arguments:
 
@@ -48,7 +48,7 @@ sudo ./installWP.bash USER FQDN
 
 The script will output the MySQL and system password for your chosen user. It will also output a password for the Wordpress admin user "cydadmin". 
 
-h1. Updating your Wordpress sites
+## Updating your Wordpress sites
 
 Add your users to the file update/updateWP.conf
 
