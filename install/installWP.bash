@@ -10,7 +10,7 @@ fi
 cd "$(dirname $0)"
 
 userName=$1
-fullURL=$2
+FQDN=$2
 userPassword=$(echo -n $RANDOM | md5sum | awk {'print $1'})
 wpAdminPassword=$(echo -n $RANDOM | md5sum | awk {'print $1'})
 installDir=/srv/$userName
@@ -37,14 +37,14 @@ su - $userName -c "
 cd $installDir
 wp core download --locale=sv_SE
 wp core config --dbname=$userName --dbuser=$userName --dbpass=$userPassword --locale=sv_SE
-wp core install --url=$fullURL --title='$userName website' --admin_user=cydadmin --admin_password=$wpAdminPassword --admin_email=logs@cyd.liu.se
+wp core install --url=$FQDN --title='$userName website' --admin_user=cydadmin --admin_password=$wpAdminPassword --admin_email=logs@cyd.liu.se
 wp plugin install active-directory-integration
 wp plugin activate active-directory-integration"
 echo ""
 
 # Create config files for nginx and uwsgi
-./nginx.bash $userName $fullURL
-./php5-fpm.bash $userName $fullURL
+./nginx.bash $userName $FQDN
+./php5-fpm.bash $userName $FQDN
 
 echo ""
 echo "This is the password for MySQL- and system user $userName:"

@@ -8,18 +8,18 @@ then
 fi
 
 userName=$1
-fullURL=$2
-configFile=/etc/php5/fpm/pool.d/$fullURL.conf
+FQDN=$2
+configFile=/etc/php5/fpm/pool.d/$FQDN.conf
 
 # Create conf for app pool
 touch $configFile
 
 cat > $configFile << EOF
-[$fullURL]
+[$FQDN]
 prefix = /
 user = $userName
 group = $userName
-listen = /var/run/php5-fpm/$fullURL.sock
+listen = /var/run/php5-fpm/$FQDN.sock
 listen.owner = $userName
 listen.group = www-data
 listen.mode = 770
@@ -31,4 +31,3 @@ EOF
 
 # Activate app pool
 service php5-fpm restart
-

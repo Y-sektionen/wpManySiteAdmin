@@ -17,10 +17,10 @@ touch $configFile
 
 cat > $configFile << EOF
 server {
-  server_name $fullURL *.$fullURL;
+  server_name $FQDN *.$FQDN;
 
-  error_log /var/log/nginx/$fullURL/error.log;
-  access_log /var/log/nginx/$fullURL/access.log;
+  error_log /var/log/nginx/$FQDN/error.log;
+  access_log /var/log/nginx/$FQDN/access.log;
 
   root /srv/$userName;
 
@@ -28,7 +28,7 @@ server {
 
   location ~ \.php$ {
     try_files \$uri =404;
-    fastcgi_pass unix:/var/run/php5-fpm/$fullURL.sock;
+    fastcgi_pass unix:/var/run/php5-fpm/$FQDN.sock;
     fastcgi_index index.php;
     include fastcgi_params;
   }
