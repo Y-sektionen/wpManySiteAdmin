@@ -7,7 +7,6 @@ then
 	exit 1
 fi
 
-# cd to script dir
 cd "$(dirname $0)"
 
 userName=$1
@@ -34,7 +33,8 @@ chmod -R g+s $installDir
 
 echo "Installing Wordpress + AD-plugin"
 # Install Wordpress + AD plugin using wp-cli
-su - $userName -c "cd $installDir 
+su - $userName -c "
+cd $installDir
 wp core download --locale=sv_SE
 wp core config --dbname=$userName --dbuser=$userName --dbpass=$userPassword --locale=sv_SE
 wp core install --url=$fullURL --title='$userName website' --admin_user=cydadmin --admin_password=$wpAdminPassword --admin_email=logs@cyd.liu.se
@@ -54,4 +54,3 @@ echo ""
 echo "This is the password for WP-administrator-user cydadmin:"
 echo $wpAdminPassword
 echo ""
-

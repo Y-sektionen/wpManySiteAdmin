@@ -39,4 +39,3 @@ EOF
 # Activate site
 ln -s $configFile /etc/nginx/sites-enabled
 service nginx reload
-
