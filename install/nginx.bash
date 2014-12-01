@@ -22,7 +22,7 @@ server {
   error_log /var/log/nginx/$fullURL/error.log;
   access_log /var/log/nginx/$fullURL/access.log;
 
-  root /srv/$fullURL;
+  root /srv/$userName;
 
   index index.php index.html index.htm;
 

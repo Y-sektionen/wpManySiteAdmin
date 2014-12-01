@@ -23,7 +23,7 @@ listen = /var/run/php5-fpm/$fullURL.sock
 listen.owner = $userName
 listen.group = www-data
 listen.mode = 770
-chdir = /srv/$fullURL
+chdir = /srv/$userName
 pm = ondemand
 pm.max_children = 4
 

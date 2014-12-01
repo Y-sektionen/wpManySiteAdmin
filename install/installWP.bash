@@ -14,7 +14,7 @@ userName=$1
 fullURL=$2
 userPassword=$(echo -n $RANDOM | md5sum | awk {'print $1'})
 wpAdminPassword=$(echo -n $RANDOM | md5sum | awk {'print $1'})
-installDir=/srv/$fullURL
+installDir=/srv/$userName
 
 # Create user in Linux and MySQL
 useradd -p $(echo $userPassword | openssl passwd -1 -stdin) $userName
