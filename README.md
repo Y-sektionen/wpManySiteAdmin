@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## Requirements
 
-These scripts are dependent on three components
+These scripts are dependent on these components
 
 * php5-fpm
 * nginx
