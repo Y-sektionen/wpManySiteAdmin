@@ -12,7 +12,7 @@ dir="$(dirname $0)"
 cd $dir
 
 # Read config file with paths to WP-installs and usernames
-config=$dir/updateWP.conf
+config=$dir/../conf
 source $config
 
 for userName in $userNames
@@ -45,5 +45,3 @@ wp plugin update --all"
 
 	echo ""
 done
-
-

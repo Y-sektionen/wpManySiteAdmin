@@ -11,6 +11,9 @@ userName=$1
 fullURL=$2
 configFile=/etc/nginx/sites-available/$fullURL
 
+# Read config file with paths to WP-installs and usernames
+source $dir/../conf
+
 # Create configfolder+file
 mkdir -p /var/log/nginx/$fullURL
 touch $configFile
@@ -22,7 +25,7 @@ server {
   error_log /var/log/nginx/$FQDN/error.log;
   access_log /var/log/nginx/$FQDN/access.log;
 
-  root /srv/$userName;
+  root $basePath/$userName;
 
   index index.php index.html index.htm;
 

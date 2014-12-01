@@ -7,13 +7,18 @@ then
 	exit 1
 fi
 
-cd "$(dirname $0)"
+# cd to script dir
+scriptDir="$(dirname $0)"
+cd $scriptDir
+
+# Read config file with paths to WP-installs and usernames
+source $scriptDir/../conf
 
 userName=$1
 FQDN=$2
 userPassword=$(echo -n $RANDOM | md5sum | awk {'print $1'})
 wpAdminPassword=$(echo -n $RANDOM | md5sum | awk {'print $1'})
-installDir=/srv/$userName
+installDir=$basePath/$userName
 
 # Create user in Linux and MySQL
 useradd -p $(echo $userPassword | openssl passwd -1 -stdin) $userName

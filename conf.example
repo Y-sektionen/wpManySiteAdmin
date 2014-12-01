@@ -1,0 +1,5 @@
+# Basepaths for WP-installs, WP is installed to $basePath/$userName
+basePath=/srv
+
+# Site name = user name that executes the site.
+userNames="org1 org2"
