@@ -26,7 +26,7 @@ do
         echo ""
         echo "Updating site for user $userName..."
         su - $userName -c "cd $basePath/$userName
-wp core update --version=$(wp core check-update | grep minor | awk {'print $1'})
+wp core update --version=$(wp core check-update --allow-root | grep minor | awk {'print $1'})
 wp core update-db"
     else
         echo "No minor update found for WP site $userName"
