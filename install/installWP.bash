@@ -42,7 +42,7 @@ su - $userName -c "
 cd $installDir
 wp core download --locale=sv_SE
 wp core config --dbname=$userName --dbuser=$userName --dbpass=$userPassword --locale=sv_SE
-wp core install --url=$FQDN --title='$userName website' --admin_user=cydadmin --admin_password=$wpAdminPassword --admin_email=logs@cyd.liu.se
+wp core install --url=$FQDN --title='$userName website' --admin_user=$adminUser --admin_password=$wpAdminPassword --admin_email=$adminMail
 wp plugin install active-directory-integration
 wp plugin activate active-directory-integration"
 echo ""
@@ -56,6 +56,6 @@ echo "This is the password for MySQL- and system user $userName:"
 echo $userPassword
 echo ""
 
-echo "This is the password for WP-administrator-user cydadmin:"
+echo "This is the password for WP-administrator-user $adminUser:"
 echo $wpAdminPassword
 echo ""

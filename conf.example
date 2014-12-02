@@ -1,3 +1,7 @@
+# User info for admin user in WP-installs
+adminUser=admin
+adminMail=admin@example.com
+
 # Basepaths for WP-installs, WP is installed to $basePath/$userName
 basePath=/srv
 
