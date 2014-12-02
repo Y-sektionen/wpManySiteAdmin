@@ -1,7 +1,7 @@
 CYD-poolen - wp-cli
 ===========
 
-Scripts for simplified installation, maintaining and ending/deletion of Wordpress sites. 
+Scripts for simplified installation, maintainance and ending/deletion of Wordpress sites. Installs Active Directory (AD) plugin for Wordpress as well since AD is used at LiU. 
 
 ## License
 
@@ -37,7 +37,9 @@ Too install dependencies on Debian Stable:
 sudo apt-get install php5-cli php5-fpm nginx php5-ldap mysql-server php5-mysql
 </pre>
 
-The init script for php5-fpm in Debian doesn't allow us to put sockets in the folder that you usually put it in (/var/run/php5-fpm), so we modify it. On line 14:
+**PHP5-FPM**
+
+The init script for php5-fpm in Debian doesn't allow us to put sockets in the folder we want to (/var/run/php5-fpm), so we modify it. On line 14:
 
 <pre>
 socketdir=/var/run/php5-fpm
@@ -51,7 +53,9 @@ Then on line 58 in the funciton do_start()
 [ -d $socketdir ] || install -m 755 -o root -g root -d $socketdir
 </pre>
 
-Then install wp-cli from the projects Github page (preferable using .deb-package), https://github.com/wp-cli/wp-cli/wiki/Alternative-Install-Methods.
+**wp-cli**
+
+Install wp-cli from the projects Github page (preferable using .deb-package), https://github.com/wp-cli/wp-cli/wiki/Alternative-Install-Methods.
 
 <pre>
 sudo dpkg -i FILE.deb
@@ -65,11 +69,11 @@ Run the script installWP.bash with username and FQDN as arguments:
 sudo ./installWP.bash USER FQDN
 </pre>
 
-The script will output the MySQL and system password for your chosen user. It will also output a password for the Wordpress admin user "cydadmin". 
+The script will output the MySQL and system password for your chosen user. It will also output a password for the Wordpress admin user chosen in the config file. 
 
 ## Updating your Wordpress sites
 
-Add your users to the file update/updateWP.conf
+Add your users to the file "conf"
 
 <pre>
 # Site name = username for the site
