@@ -11,6 +11,13 @@ userName=$1
 FQDN=$2
 configFile=/etc/php5/fpm/pool.d/$FQDN.conf
 
+# cd to script dir
+scriptDir="$(dirname $0)"
+cd $scriptDir
+
+# Read config file with paths to WP-installs and usernames
+source $scriptDir/../conf
+
 # Create conf for app pool
 touch $configFile
 

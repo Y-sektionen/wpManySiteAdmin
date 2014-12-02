@@ -11,6 +11,7 @@ userName=$1
 FQDN=$2
 
 # Remove users and DBs
+gpasswd -d www-data $userName
 userdel $userName
 mysql --user=root -p -e "drop database $userName;
 drop user '$userName'@'localhost';"

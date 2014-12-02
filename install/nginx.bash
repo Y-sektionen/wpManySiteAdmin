@@ -8,14 +8,18 @@ then
 fi
 
 userName=$1
-fullURL=$2
-configFile=/etc/nginx/sites-available/$fullURL
+FQDN=$2
+configFile=/etc/nginx/sites-available/$FQDN
 
+
+# cd to script dir
+scriptDir="$(dirname $0)"
+cd $scriptDir
 # Read config file with paths to WP-installs and usernames
-source $dir/../conf
+source $scriptDir/../conf
 
 # Create configfolder+file
-mkdir -p /var/log/nginx/$fullURL
+mkdir -p /var/log/nginx/$FQDN
 touch $configFile
 
 cat > $configFile << EOF
