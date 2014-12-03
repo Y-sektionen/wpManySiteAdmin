@@ -7,3 +7,9 @@ basePath=/srv
 
 # Site name = user name that executes the site.
 userNames="org1 org2"
+
+
+##
+# You don't have to touch the definitions beyond this point.
+##
+PATH=$PATH:/usr/sbin
