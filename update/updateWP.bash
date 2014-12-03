@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 if [[ $# != 0 || $S1 == "-h" || $S1 == "--help" ]]
 then
@@ -8,13 +7,10 @@ then
         exit 1
 fi
 
-# cd to script dir
-dir="$(dirname $0)"
-cd $dir
 
+cd "$(dirname $0)"
 # Read config file with paths to WP-installs and usernames
-config=$dir/../conf
-source $config
+source ../conf
 
 for userName in $userNames
 do

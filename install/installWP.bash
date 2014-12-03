@@ -8,12 +8,9 @@ then
 	exit 1
 fi
 
-# cd to script dir
-scriptDir="$(dirname $0)"
-cd $scriptDir
-
+cd "$(dirname $0)"
 # Read config file with paths to WP-installs and usernames
-source $scriptDir/../conf
+source ../conf
 
 userName=$1
 FQDN=$2

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [[ $# != 2 ]]
 then
@@ -11,12 +12,9 @@ userName=$1
 FQDN=$2
 configFile=/etc/php5/fpm/pool.d/$FQDN.conf
 
-# cd to script dir
-scriptDir="$(dirname $0)"
-cd $scriptDir
-
+cd "$(dirname $0)"
 # Read config file with paths to WP-installs and usernames
-source $scriptDir/../conf
+source ../conf
 
 # Create conf for app pool
 touch $configFile

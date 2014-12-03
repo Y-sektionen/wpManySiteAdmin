@@ -12,12 +12,10 @@ userName=$1
 FQDN=$2
 configFile=/etc/nginx/sites-available/$FQDN
 
-
-# cd to script dir
 scriptDir="$(dirname $0)"
 cd $scriptDir
 # Read config file with paths to WP-installs and usernames
-source $scriptDir/../conf
+source ../conf
 
 # Create configfolder+file
 mkdir -p /var/log/nginx/$FQDN

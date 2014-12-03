@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 if [[ $# != 2 || $S1 == "-h" || $S1 == "--help" ]]
 then
@@ -8,7 +7,10 @@ then
 	exit 1
 fi
 
-source "$(dirname $0)"/../conf
+cd "$(dirname $0)"
+# Read config file with paths to WP-installs and usernames
+source ../conf
+
 
 userName=$1
 FQDN=$2
@@ -16,6 +18,7 @@ FQDN=$2
 # Remove users and DBs
 gpasswd -d $userName www-data
 userdel $userName
+groupdel $userName
 echo "Please enter root password for MYSQL: "
 mysql --user=root -p -e "drop database $userName;
 drop user '$userName'@'localhost';"
