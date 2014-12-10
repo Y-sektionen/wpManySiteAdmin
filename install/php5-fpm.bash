@@ -36,3 +36,4 @@ EOF
 
 # Activate app pool
 service php5-fpm restart
+
