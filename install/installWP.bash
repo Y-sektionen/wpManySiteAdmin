@@ -29,9 +29,8 @@ echo ""
 
 # Create folders for WP. www-data in user group and correct permissions for server to run
 mkdir -p $installDir
-chown -R $userName:$userName $installDir
-usermod -aG $userName www-data
-chmod -R 770 $installDir
+chown -R $userName:www-data $installDir
+chmod -R 750 $installDir
 chmod -R g+s $installDir
 
 echo "Installing Wordpress + AD-plugin"
