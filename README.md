@@ -31,7 +31,7 @@ These scripts are dependent on these components
 * mysql
 * wp-cli
 
-Too install dependencies on Debian Stable: 
+Too install dependencies on Debian Stable:
 
 <pre>
 sudo apt-get install php5-cli php5-fpm nginx php5-ldap mysql-server php5-mysql
@@ -48,7 +48,7 @@ socketdir=/var/run/php5-fpm
 Then on line 58 in the funciton do_start()
 
 <pre>
-# Create socket dir with correct permissions if it doesn't exist 
+# Create socket dir with correct permissions if it doesn't exist
 # since /run is cleaned on reboot /parker 2014-11-03
 [ -d $socketdir ] || install -m 755 -o root -g root -d $socketdir
 </pre>
@@ -63,7 +63,7 @@ sudo dpkg -i FILE.deb
 
 ## Installing a Wordpress site
 
-Run the script installWP.bash with username and FQDN as arguments:
+Run the script installWP.bash with username and fully qualified domain name (FQDN) as arguments:
 
 <pre>
 sudo ./installWP.bash USER FQDN
@@ -91,5 +91,3 @@ Add this line:
 <pre>
 min hour * * * /PATH/TO/PROJECT/DIR/update/updateWP.bash
 </pre>
-
-

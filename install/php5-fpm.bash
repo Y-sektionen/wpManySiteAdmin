@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [[ $# != 2 ]]
 then
@@ -10,6 +11,10 @@ fi
 userName=$1
 FQDN=$2
 configFile=/etc/php5/fpm/pool.d/$FQDN.conf
+
+cd "$(dirname $0)"
+# Read config file with paths to WP-installs and usernames
+source ../conf
 
 # Create conf for app pool
 touch $configFile
@@ -23,7 +28,7 @@ listen = /var/run/php5-fpm/$FQDN.sock
 listen.owner = $userName
 listen.group = www-data
 listen.mode = 770
-chdir = /srv/$userName
+chdir = $basePath/$userName
 pm = ondemand
 pm.max_children = 4
 
@@ -31,3 +36,4 @@ EOF
 
 # Activate app pool
 service php5-fpm restart
+

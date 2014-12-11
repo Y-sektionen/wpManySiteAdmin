@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [[ $# != 2 || $S1 == "-h" || $S1 == "--help" ]]
 then
@@ -8,12 +9,14 @@ then
 fi
 
 cd "$(dirname $0)"
+# Read config file with paths to WP-installs and usernames
+source ../conf
 
 userName=$1
 FQDN=$2
 userPassword=$(echo -n $RANDOM | md5sum | awk {'print $1'})
 wpAdminPassword=$(echo -n $RANDOM | md5sum | awk {'print $1'})
-installDir=/srv/$userName
+installDir=$basePath/$userName
 
 # Create user in Linux and MySQL
 useradd -p $(echo $userPassword | openssl passwd -1 -stdin) $userName
@@ -26,9 +29,8 @@ echo ""
 
 # Create folders for WP. www-data in user group and correct permissions for server to run
 mkdir -p $installDir
-chown -R $userName:$userName $installDir
-usermod -aG $userName www-data
-chmod -R 770 $installDir
+chown -R $userName:www-data $installDir
+chmod -R 750 $installDir
 chmod -R g+s $installDir
 
 echo "Installing Wordpress + AD-plugin"
@@ -37,7 +39,7 @@ su - $userName -c "
 cd $installDir
 wp core download --locale=sv_SE
 wp core config --dbname=$userName --dbuser=$userName --dbpass=$userPassword --locale=sv_SE
-wp core install --url=$FQDN --title='$userName website' --admin_user=cydadmin --admin_password=$wpAdminPassword --admin_email=logs@cyd.liu.se
+wp core install --url=$FQDN --title='$userName website' --admin_user=$adminUser --admin_password=$wpAdminPassword --admin_email=$adminMail
 wp plugin install active-directory-integration
 wp plugin activate active-directory-integration"
 echo ""
@@ -51,6 +53,6 @@ echo "This is the password for MySQL- and system user $userName:"
 echo $userPassword
 echo ""
 
-echo "This is the password for WP-administrator-user cydadmin:"
+echo "This is the password for WP-administrator-user $adminUser:"
 echo $wpAdminPassword
 echo ""

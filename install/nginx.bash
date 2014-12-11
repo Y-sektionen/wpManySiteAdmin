@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [[ $# != 2 ]]
 then
@@ -8,11 +9,16 @@ then
 fi
 
 userName=$1
-fullURL=$2
-configFile=/etc/nginx/sites-available/$fullURL
+FQDN=$2
+configFile=/etc/nginx/sites-available/$FQDN
+
+scriptDir="$(dirname $0)"
+cd $scriptDir
+# Read config file with paths to WP-installs and usernames
+source ../conf
 
 # Create configfolder+file
-mkdir -p /var/log/nginx/$fullURL
+mkdir -p /var/log/nginx/$FQDN
 touch $configFile
 
 cat > $configFile << EOF
@@ -22,7 +28,7 @@ server {
   error_log /var/log/nginx/$FQDN/error.log;
   access_log /var/log/nginx/$FQDN/access.log;
 
-  root /srv/$userName;
+  root $basePath/$userName;
 
   index index.php index.html index.htm;
 
