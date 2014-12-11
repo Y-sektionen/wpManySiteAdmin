@@ -16,7 +16,6 @@ userName=$1
 FQDN=$2
 
 # Remove users and DBs
-gpasswd -d $userName www-data
 userdel $userName
 groupdel $userName
 echo "Please enter root password for MYSQL: "
