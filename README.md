@@ -3,7 +3,7 @@ wpManySiteAdmin
 
 Scripts for simplified installation, maintainance and deletion of Wordpress sites. Installs Active Directory (AD) plugin for Wordpress as well since AD is used at LiU. 
 
-This readme does NOT cover AD-plugin and OpenLDAP configuration since that's specific to each domain, 
+This readme does NOT cover AD-plugin and OpenLDAP configuration since that's specific to each domain. 
 
 ## License
 
