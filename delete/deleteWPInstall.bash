@@ -29,3 +29,4 @@ rm /etc/php5/fpm/pool.d/$FQDN.conf
 
 # Remove WP-install
 rm -r $basePath/$userName
+rm -r /home/$userName/.wp-cli
