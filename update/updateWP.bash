@@ -15,12 +15,12 @@ source ../conf
 for userName in $userNames
 do
     echo "Checking install $userName for minor update..."
-    cd $basePath/$userName
+    cd $basePath/$userName/wordpress
     if wp core check-update --allow-root | grep "minor"    
     then
         echo ""
         echo "Updating site for user $userName..."
-        su - $userName -c "cd $basePath/$userName
+        su - $userName -c "cd $basePath/$userName/wordpress
 wp core update --version=$(wp core check-update --allow-root | grep minor | awk {'print $1'})
 wp core update-db"
     else
@@ -34,8 +34,9 @@ wp core update-db"
 
     # Update all plugins as well
     echo "Updating plugins for $userName"
-    su - $userName -c "cd $basePath/$userName
+    su - $userName -c "cd $basePath/$userName/wordpress
 wp plugin update --all"
 
 	echo ""
 done
+
