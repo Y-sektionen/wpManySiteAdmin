@@ -40,22 +40,6 @@ To install most dependencies on Debian Stable:
 sudo apt-get install php5-cli php5-fpm nginx php5-ldap mysql-server php5-mysql
 </pre>
 
-**PHP5-FPM**
-
-The init script for php5-fpm in Debian doesn't allow us to put sockets in the folder we want to (/var/run/php5-fpm), so we modify it. On line 14:
-
-<pre>
-socketdir=/var/run/php5-fpm
-</pre>
-
-Then on line 58 in the funciton do_start()
-
-<pre>
-# Create socket dir with correct permissions if it doesn't exist
-# since /run is cleaned on reboot /parker 2014-11-03
-[ -d $socketdir ] || install -m 755 -o root -g root -d $socketdir
-</pre>
-
 **wp-cli**
 
 Install wp-cli from the project Github page (preferable using .deb-package), https://github.com/wp-cli/wp-cli/wiki/Alternative-Install-Methods.
