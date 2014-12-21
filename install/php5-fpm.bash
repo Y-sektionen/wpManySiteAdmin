@@ -3,9 +3,9 @@ set -e
 
 if [[ $# != 2 ]]
 then
-        echo "Usage: "
-        echo "  $0 userName"
-        exit 1
+	echo "Usage: "
+	echo "	$0 userName"
+	exit 1
 fi
 
 userName=$1
