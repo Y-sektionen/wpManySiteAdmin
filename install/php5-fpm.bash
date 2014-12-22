@@ -3,9 +3,9 @@ set -e
 
 if [[ $# != 2 ]]
 then
-        echo "Usage: "
-        echo "  $0 userName"
-        exit 1
+	echo "Usage: "
+	echo "	$0 userName"
+	exit 1
 fi
 
 userName=$1
@@ -21,14 +21,17 @@ touch $configFile
 
 cat > $configFile << EOF
 [$FQDN]
-prefix = /
+prefix = /$basePath/$userName
 user = $userName
 group = $userName
-listen = /var/run/php5-fpm/$FQDN.sock
+chroot = $prefix
+chdir = wordpress
+
+listen = socket/$FQDN.sock
 listen.owner = $userName
 listen.group = www-data
 listen.mode = 770
-chdir = $basePath/$userName
+
 pm = ondemand
 pm.max_children = 4
 

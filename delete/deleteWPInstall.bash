@@ -23,10 +23,11 @@ mysql --user=root -p -e "drop database $userName;
 drop user '$userName'@'localhost';"
 
 # Remove configs
-rm /etc/nginx/sites-enabled/$FQDN
-rm /etc/nginx/sites-available/$FQDN
-rm /etc/php5/fpm/pool.d/$FQDN.conf
+rm -f /etc/nginx/sites-enabled/$FQDN
+rm -f /etc/nginx/sites-available/$FQDN
+rm -f /etc/php5/fpm/pool.d/$FQDN.conf
 
 # Remove WP-install
-rm -r $basePath/$userName
-rm -r /home/$userName/.wp-cli
+rm -rf $basePath/$userName
+rm -rf /home/$userName/.wp-cli
+
