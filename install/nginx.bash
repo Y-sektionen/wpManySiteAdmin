@@ -29,10 +29,9 @@ server {
 	access_log /var/log/nginx/$FQDN/access.log;
 
 	root $basePath/$userName/wordpress;
-
 	index index.php index.html index.htm;
+	client_max_body_size 50m;
 
-	# Restrictions for added security -----------
 
 	location = /favicon.ico {
 		log_not_found off;
@@ -72,4 +71,3 @@ EOF
 # Activate site
 ln -s $configFile /etc/nginx/sites-enabled
 service nginx reload
-
