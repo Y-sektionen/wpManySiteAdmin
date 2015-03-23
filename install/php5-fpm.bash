@@ -27,7 +27,7 @@ group = $userName
 chroot = $prefix
 chdir = wordpress
 
-listen = socket/$FQDN.sock
+listen = socket/php-fpm.sock
 listen.owner = $userName
 listen.group = www-data
 listen.mode = 770
@@ -39,4 +39,3 @@ EOF
 
 # Activate app pool
 service php5-fpm restart
-

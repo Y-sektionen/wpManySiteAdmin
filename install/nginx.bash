@@ -61,7 +61,7 @@ server {
 
 	location ~ \.php$ {
 		try_files \$uri =404;
-		fastcgi_pass unix:/srv/$userName/socket/$FQDN.sock;
+		fastcgi_pass unix:/srv/$userName/socket/php-fpm.sock;
 		fastcgi_index index.php;
 		include fastcgi_params;
 	}
@@ -72,4 +72,3 @@ EOF
 # Activate site
 ln -s $configFile /etc/nginx/sites-enabled
 service nginx reload
-
