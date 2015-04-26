@@ -1,0 +1,3 @@
+[submodule "scan/wpscan"]
+	path = scan/wpscan
+	url = git@github.com:wpscanteam/wpscan
