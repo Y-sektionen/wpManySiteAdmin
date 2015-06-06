@@ -1,15 +1,15 @@
 wpManySiteAdmin
 ===========
 
-Scripts for simplified installation, maintainance and deletion of Wordpress sites. Installs Active Directory (AD) plugin for Wordpress as well since AD is used at LiU. 
+Scripts for simplified installation, update, monitoring and deletion of Wordpress sites. Each site is after installation automatically upgraded through minor updates and scanned for vulnerabilities using wp-scan and ssl-labs-scan.
 
-This readme does NOT cover AD-plugin and OpenLDAP configuration since that's specific to each domain. 
+Note: The default installation installs the Active Directory (AD) plugin for Wordpress since AD is commonly used at LiU for user data. This readme does NOT cover AD-plugin configuration since that's specific to each domain.
 
 ## License
 
 ```
-CYD-poolen - wp-cli - Scripts for simplified installation, maintaining and 
-deletion of Wordpress sites. Copyright (C) 2014 CYD-poolen, Linköping University.
+CYD-poolen - wp-cli - Scripts for simplified installation, maintaining and
+deletion of Wordpress sites. Copyright (C) 2014,2015 CYD-poolen, Linköping University.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ Copy the file example.conf to conf:
 cp example.conf conf
 </pre>
 
-In the file "config", enter your desired admin user name, admin user email and basepath for your WP-sites. 
+In the file "config", enter your desired admin user name, admin user email and basepath for your WP-sites.
 
 <pre>
 editor config
@@ -99,9 +99,9 @@ Run the script installWP.bash with username and fully qualified domain name (FQD
 sudo ./installWP.bash USER FQDN
 </pre>
 
-The script will output the MySQL and system password for your chosen user. It will also output a password for the Wordpress admin user chosen in the config file. 
+The script will output the MySQL and system password for your chosen user. It will also output a password for the Wordpress admin user chosen in the config file.
 
-Add the username for the site to the list of userNames in config file: 
+Add the username for the site to the list of userNames in config file:
 
 <pre>
 # Site name = user name that executes the site.
