@@ -24,7 +24,7 @@ done
 ###
 # SSLLabs Scan
 ###
-cd "$(dirname $0)/ssllabs-scan"
+cd "../ssllabs-scan"
 if ! make; then
 	echo Failed to compile ssllabs-scan!
 	exit 1
@@ -33,6 +33,6 @@ for site in $sites; do
 	echo ""
 	echo "------------"
 	echo "Scanning site $site for vulnerabilities using ssllabs-scan..."
-	./ssllabs-scan --usecache --verbosity error cyd.liu.se
+	./ssllabs-scan --usecache --grade --verbosity error $site
 	echo "------------"
 done
