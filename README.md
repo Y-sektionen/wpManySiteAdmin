@@ -33,11 +33,13 @@ These scripts are dependent on these components
 * nginx
 * mysql
 * wp-cli
+* go
+* ruby
 
 To install most dependencies on Debian Stable:
 
 <pre>
-sudo apt-get install php5-cli php5-fpm nginx php5-ldap mysql-server php5-mysql
+sudo apt-get install php5-cli php5-fpm nginx php5-ldap mysql-server php5-mysql ruby ruby-dev libcurl4-gnutls-dev make golang
 </pre>
 
 **wp-cli**
@@ -53,8 +55,15 @@ sudo dpkg -i FILE.deb
 Clone this repo:
 
 <pre>
-git clone https://github.com/CYD-poolen/wpManySiteAdmin
+git clone --recursive https://github.com/CYD-poolen/wpManySiteAdmin
 cd wpManySiteAdmin
+</pre>
+
+Complete the installation of wp-scan:
+
+<pre>
+cd scan/wpscan
+bundle install --without test --path vendor/bundle
 </pre>
 
 Copy the file example.conf to conf:
