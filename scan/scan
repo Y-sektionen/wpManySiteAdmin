@@ -4,16 +4,15 @@
 cd "$(dirname $0)/.."
 git submodule foreach git pull origin master
 
-# wpscan requires it's dependencies to be in PATH, easiest to just cd to folder
+# wpscan requires it's dependencies to be in PATH, easiest to just cd to folder.
 cd "scan/wpscan"
-# Set wpscan script and sites to scan
+# Set wpscan script and sites to scan.
 wpscan=./wpscan.rb
 sites=$(ls /etc/nginx/sites-enabled)
 # Update the database with vulnerabilities.
 $wpscan --update
 
-for site in $sites
-do
+for site in $sites; do
 	echo ""
 	echo "------------"
 	echo "Scanning site $site for vulnerabilities using wpscan..."
@@ -21,3 +20,17 @@ do
 	echo "------------"
 done
 
+
+###
+# SSLLabs Scan
+###
+cd "$(dirname $0)/ssllabs-scan"
+make
+
+for site in $sites; do
+	echo ""
+	echo "------------"
+	echo "Scanning site $site for vulnerabilities using ssllabs-scan..."
+	./ssllabs-scan --usecache --verbosity error cyd.liu.se
+	echo "------------"
+done
