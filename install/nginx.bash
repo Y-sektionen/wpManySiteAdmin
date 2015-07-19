@@ -62,6 +62,7 @@ server {
 		try_files \$uri =404;
 		fastcgi_pass unix:/srv/$userName/socket/php-fpm.sock;
 		fastcgi_index index.php;
+		fastcgi_param	SCRIPT_FILENAME	\$document_root/\$fastcgi_script_name;
 		include fastcgi_params;
 	}
 }
