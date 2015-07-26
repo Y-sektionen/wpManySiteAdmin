@@ -2,7 +2,7 @@
 
 # Update the git submodule(s) containing wpscan (and potentially other/future projects) so that we always run the latest version
 cd "$(dirname $0)/.."
-git submodule foreach git pull origin master
+git submodule update --remote
 
 # wpscan requires it's dependencies to be in PATH, easiest to just cd to folder.
 cd "scan/wpscan"
