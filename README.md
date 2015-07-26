@@ -66,16 +66,17 @@ cd scan/wpscan
 bundle install --without test --path vendor/bundle
 </pre>
 
-Copy the file example.conf to conf:
+Copy the example configuration file.
 
 <pre>
-cp example.conf conf
+cd ../..
+cp conf.example conf
 </pre>
 
-In the file "config", enter your desired admin user name, admin user email and basepath for your WP-sites.
+Enter your desired admin user name, admin user email and basepath for your WP-sites.
 
 <pre>
-editor config
+editor conf
 </pre>
 
 <pre>
