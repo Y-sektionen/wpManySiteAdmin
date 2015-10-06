@@ -2,18 +2,17 @@
 
 # Update the git submodule(s) containing wpscan (and potentially other/future projects) so that we always run the latest version
 cd "$(dirname $0)/.."
-git submodule foreach git pull origin master
+git submodule update --remote
 
-# wpscan requires it's dependencies to be in PATH, easiest to just cd to folder
+# wpscan requires it's dependencies to be in PATH, easiest to just cd to folder.
 cd "scan/wpscan"
-# Set wpscan script and sites to scan
+# Set wpscan script and sites to scan.
 wpscan=./wpscan.rb
 sites=$(ls /etc/nginx/sites-enabled)
 # Update the database with vulnerabilities.
 $wpscan --update
 
-for site in $sites
-do
+for site in $sites; do
 	echo ""
 	echo "------------"
 	echo "Scanning site $site for vulnerabilities using wpscan..."
@@ -21,3 +20,19 @@ do
 	echo "------------"
 done
 
+
+###
+# SSLLabs Scan
+###
+cd "../ssllabs-scan"
+if ! make; then
+	echo Failed to compile ssllabs-scan!
+	exit 1
+fi
+for site in $sites; do
+	echo ""
+	echo "------------"
+	echo "Scanning site $site for vulnerabilities using ssllabs-scan..."
+	./ssllabs-scan --usecache --grade --verbosity error $site
+	echo "------------"
+done

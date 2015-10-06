@@ -1,12 +1,14 @@
-WPScan
-==============
+Upstreams
+=========
 
-Scripts using wpscan (https://github.com/wpscanteam/wpscan) to scan all sites hosted on the local machine. 
+These scripts use [wpscan](https://github.com/wpscanteam/wpscan) to scan all sites hosted on the local machine.
+
+They also make use of the SSL Labs [scan service](https://www.ssllabs.com/) and [scan script](https://github.com/ssllabs/ssllabs-scan).
 
 Installation
 ==============
 
-First clone this repository, see README.md at the top level. 
+First clone this repository, see README.md at the top level.
 
 Get the git sumodule for wpscan:
 
@@ -15,9 +17,6 @@ Get the git sumodule for wpscan:
 
 Install dependencies for wpscan:
 
-	sudo apt-get install ruby ruby-dev libcurl4-gnutls-dev make
-	sudo gem install bundler
 	bundle install --without test --path vendor/bundle
 
-Then either run the script scan.bash manually or add the script to your crontab. 
-
+Then either run the script ```scan``` manually or add the script to your crontab.
