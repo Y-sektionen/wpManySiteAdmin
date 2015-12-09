@@ -99,16 +99,17 @@ adminMail=admin@example.com
 basePath=/srv
 </pre>
 
-Add the update script to roots crontab:
+Add the update and renewCert scripts to roots crontab:
 
 <pre>
 sudo crontab -e
 </pre>
 
-Add this line to check for update once a day:
+Add this line to check for update once a day, and renew certs once a month at the first:
 
 <pre>
 min hour * * * /PATH/TO/PROJECT/DIR/update/updateWP.bash
+min hour 1 * * /PATH/TO/PROJECT/DIR/update/renewCerts.bash
 </pre>
 
 
