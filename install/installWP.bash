@@ -59,3 +59,4 @@ echo ""
 echo "This is the password for WP-administrator-user $adminUser:"
 echo $wpAdminPassword
 echo ""
+

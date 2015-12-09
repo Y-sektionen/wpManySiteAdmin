@@ -66,6 +66,17 @@ cd scan/wpscan
 bundle install --without test --path vendor/bundle
 </pre>
 
+**Let's encrypt**
+
+Run the letsencrypt-auto file in order for Let's encrypt to install its dependencies. 
+
+<pre>
+cd letsencrypt
+./letsencrypt-auto
+</pre>
+
+**Configuration**
+
 Copy the example configuration file.
 
 <pre>
@@ -88,22 +99,23 @@ adminMail=admin@example.com
 basePath=/srv
 </pre>
 
-Add the update script to roots crontab:
+Add the update and renewCert scripts to roots crontab:
 
 <pre>
 sudo crontab -e
 </pre>
 
-Add this line to check for update once a day:
+Add this line to check for update once a day, and renew certs once a month at the first:
 
 <pre>
 min hour * * * /PATH/TO/PROJECT/DIR/update/updateWP.bash
+min hour 1 * * /PATH/TO/PROJECT/DIR/update/renewCerts.bash
 </pre>
 
 
 ## Installing a Wordpress site
 
-Run the script installWP.bash with username and fully qualified domain name (FQDN) as arguments:
+Run the script installWP.bash with username and fully qualified domain name (FQDN) as arguments. IMPORTANT! **The FQDN must be correctly configured and pointing to the host that's running the script.**
 
 <pre>
 sudo ./installWP.bash USER FQDN
@@ -117,3 +129,4 @@ Add the username for the site to the list of userNames in config file:
 # Site name = user name that executes the site.
 userNames="org1 org2"
 </pre>
+
