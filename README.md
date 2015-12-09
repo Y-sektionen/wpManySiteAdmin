@@ -66,6 +66,17 @@ cd scan/wpscan
 bundle install --without test --path vendor/bundle
 </pre>
 
+**Let's encrypt**
+
+Run the letsencrypt-auto file in order for Let's encrypt to install its dependencies. 
+
+<pre>
+cd letsencrypt
+./letsencrypt-auto
+</pre>
+
+**Configuration**
+
 Copy the example configuration file.
 
 <pre>
@@ -103,7 +114,7 @@ min hour * * * /PATH/TO/PROJECT/DIR/update/updateWP.bash
 
 ## Installing a Wordpress site
 
-Run the script installWP.bash with username and fully qualified domain name (FQDN) as arguments:
+Run the script installWP.bash with username and fully qualified domain name (FQDN) as arguments. IMPORTANT! The FQDN MUST BE CORRECTLY CONFIGURED AND POINTING TO THE HOST THAT'S RUNNING THE SCRIPT!
 
 <pre>
 sudo ./installWP.bash USER FQDN
@@ -117,3 +128,4 @@ Add the username for the site to the list of userNames in config file:
 # Site name = user name that executes the site.
 userNames="org1 org2"
 </pre>
+
