@@ -30,7 +30,9 @@ rm -f /etc/php5/fpm/pool.d/$FQDN.conf
 
 # Revoke certificate. Will try to revoke all certs. 
 ls $letsencryptFolder/archive/$FQDN | grep "cert" | while read certificate; do
+	echo "Revoking cert $certificate"
 	../letsencrypt/letsencrypt-auto revoke --cert-path $letsencryptFolder/archive/$FQDN/$certificate
+	echo ""
 done
 # Remove config for domain
 rm -f $letsencryptFolder/$FQDN.cli.ini
