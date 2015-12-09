@@ -51,6 +51,11 @@ echo ""
 ./nginx.bash $userName $FQDN
 ./php5-fpm.bash $userName $FQDN
 
+# Run letsencrypt to get cert
+echo "Running letsencrypt to generate certificate for site!"
+echo ""
+./letsencrypt.bash $userName $FQDN
+
 echo ""
 echo "This is the password for MySQL- and system user $userName:"
 echo $userPassword
@@ -59,3 +64,4 @@ echo ""
 echo "This is the password for WP-administrator-user $adminUser:"
 echo $wpAdminPassword
 echo ""
+
