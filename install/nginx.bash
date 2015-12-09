@@ -21,6 +21,7 @@ source ../conf
 mkdir -p /var/log/nginx/$FQDN
 touch $configFile
 
+# Initial conf for letsencrypt to work
 cat > $configFile << EOF
 server {
 	listen 80;
@@ -37,7 +38,19 @@ server {
 	}
 }
 
+EOF
 
+# Enable and reload so that letsencrypt can get cert
+ln -s $configFile /etc/nginx/sites-enabled
+systemctl reload nginx
+
+# Run letsencrypt to get cert
+echo "Running letsencrypt to generate certificate for site!"
+echo ""
+./letsencrypt.bash $userName $FQDN
+
+# SSL conf
+cat >> $configFile << EOF
 server {
 	listen 443;
 	server_name $FQDN;
@@ -87,5 +100,5 @@ server {
 EOF
 
 # Activate site
-ln -s $configFile /etc/nginx/sites-enabled
 service nginx reload
+

@@ -39,6 +39,6 @@ mkdir -p $basePath/$userName/wordpress/.well-known/acme-challenge
 chown -R root $basePath/$userName/wordpress/.well-known
 
 # Run letsencrypt and get cert
-../letsencrypt/letsencrypt-auto certonly --renew-by-default --config /etc/letsencrypt/"$FQDN".cli.ini
+../letsencrypt/letsencrypt-auto certonly --renew-by-default --config $configFile
 
 
