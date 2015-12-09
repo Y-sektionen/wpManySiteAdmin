@@ -14,6 +14,7 @@ source ../conf
 
 userName=$1
 FQDN=$2
+letsencryptFolder=/etc/letsencrypt
 
 # Remove users and DBs
 userdel $userName
@@ -27,7 +28,17 @@ rm -f /etc/nginx/sites-enabled/$FQDN
 rm -f /etc/nginx/sites-available/$FQDN
 rm -f /etc/php5/fpm/pool.d/$FQDN.conf
 
+# Revoke certificate. Will try to revoke all certs. 
+ls $letsencryptFolder/archive/$FQDN | grep "cert" | while read certificate; do
+	../letsencrypt/letsencrypt-auto revoke --cert-path $letsencryptFolder/archive/$FQDN/$certificate
+done
+# Remove config for domain
+rm -f $letsencryptFolder/$FQDN.cli.ini
+
 # Remove WP-install
 rm -rf $basePath/$userName
 rm -rf /home/$userName/.wp-cli
+
+systemctl reload nginx
+systemctl reload php5-fpm
 
