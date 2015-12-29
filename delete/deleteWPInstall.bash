@@ -42,6 +42,5 @@ rm -f $letsencryptFolder/$FQDN.cli.ini
 rm -rf $basePath/$userName
 rm -rf /home/$userName/.wp-cli
 
-systemctl reload nginx
-systemctl reload php5-fpm
+systemctl reload nginx php5-fpm
 

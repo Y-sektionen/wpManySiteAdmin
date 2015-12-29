@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [[ $# != 2 || $S1 == "-h" || $S1 == "--help" ]]
+then
+        echo "Usage: "
+        echo "  $0 userName FQDN"
+        exit 1
+fi
+
 userName=$1
 FQDN=$2
 configFile=/etc/letsencrypt/"$FQDN".cli.ini
