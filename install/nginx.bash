@@ -41,10 +41,7 @@ server {
 EOF
 
 # If site is not enabled already, enable it
-if [ ! -f /etc/nginx/sites-enabled/$FQDN ]
-then
-	ln -s $configFile /etc/nginx/sites-enabled
-fi
+ln -s $configFile /etc/nginx/sites-enabled
 # Reload nginx so that letsencrypt can get cert
 systemctl reload nginx
 
