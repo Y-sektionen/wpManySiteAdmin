@@ -29,7 +29,8 @@ rm -f /etc/nginx/sites-available/$FQDN
 rm -f /etc/php5/fpm/pool.d/$FQDN.conf
 
 # Revoke certificate. Will try to revoke all certs. 
-ls $letsencryptFolder/archive/$FQDN | grep "cert" | while read certificate; do
+for certificate in $(ls $letsencryptFolder/archive/$FQDN | grep "cert")
+do
 	echo "Revoking cert $certificate"
 	../letsencrypt/letsencrypt-auto revoke --cert-path $letsencryptFolder/archive/$FQDN/$certificate
 	echo ""

@@ -115,7 +115,7 @@ min hour 1 * * /PATH/TO/PROJECT/DIR/update/renewCerts.bash
 
 ## Installing a Wordpress site
 
-Run the script installWP.bash with username and fully qualified domain name (FQDN) as arguments. IMPORTANT! The FQDN MUST BE CORRECTLY CONFIGURED AND POINTING TO THE HOST THAT'S RUNNING THE SCRIPT!
+Run the script installWP.bash with username and fully qualified domain name (FQDN) as arguments. IMPORTANT! **The FQDN must be correctly configured and pointing to the host that's running the script.**
 
 <pre>
 sudo ./installWP.bash USER FQDN
