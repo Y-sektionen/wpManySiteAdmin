@@ -8,7 +8,7 @@ source ../conf
 letsencFolder=/etc/letsencrypt
 
 # Update all certs with cli.ini file in folder for Let's Encrypt
-ls $letsencFolder/*.cli.ini | while read configFile; do
+for configFile in $(ls $letsencFolder/*.cli.ini); do
 	echo "Renewing cert using $configFile"
 	../letsencrypt/letsencrypt-auto certonly --renew-by-default --config $configFile
 	echo ""
