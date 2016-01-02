@@ -6,3 +6,6 @@
 	path = scan/ssllabs-scan
 	url = git@github.com:ssllabs/ssllabs-scan.git
 	branch = stable
+[submodule "letsencrypt"]
+	path = letsencrypt
+	url = git@github.com:letsencrypt/letsencrypt.git
