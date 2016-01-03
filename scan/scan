@@ -1,23 +1,27 @@
 #!/bin/bash
 
-# Update the git submodule(s) containing wpscan (and potentially other/future projects) so that we always run the latest version
 cd "$(dirname $0)/.."
+# Update the git submodule(s) containing wpscan (and potentially other/future projects) so that we always run the latest version.
 git submodule update --remote
-
-# wpscan requires it's dependencies to be in PATH, easiest to just cd to folder.
-cd "scan/wpscan"
-# Set wpscan script and sites to scan.
-wpscan=./wpscan.rb
 sites=$(ls /etc/nginx/sites-enabled)
-# Update the database with vulnerabilities.
+
+
+###
+# WPScan
+###
+# WPScan requires it's dependencies to be in PATH, easiest to just cd to folder.
+cd "scan/wpscan"
+wpscan=./wpscan.rb
+# Update dependencies.
+bundle install --without test --path ./vendor/bundle
+# Update the vulnerability database.
 $wpscan --update
 
 for site in $sites; do
-	echo ""
-	echo "------------"
-	echo "Scanning site $site for vulnerabilities using wpscan..."
+	echo "________________________________________________________"
+	echo "Scanning $site for WordPress vulnerabilities using wpscan:"
 	$wpscan -u $site --follow-redirection -e u,vt,vp
-	echo "------------"
+	echo "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾"
 done
 
 
@@ -30,9 +34,8 @@ if ! make; then
 	exit 1
 fi
 for site in $sites; do
-	echo ""
-	echo "------------"
-	echo "Scanning site $site for vulnerabilities using ssllabs-scan..."
+	echo "________________________________________________________"
+	echo "Checking $site HTTPS vulnerabilities using ssllabs-scan:"
 	./ssllabs-scan --usecache --grade --verbosity error $site
-	echo "------------"
+	echo "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾"
 done
