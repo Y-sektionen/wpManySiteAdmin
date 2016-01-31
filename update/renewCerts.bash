@@ -6,11 +6,28 @@ cd $scriptDir
 source ../conf
 
 letsencFolder=/etc/letsencrypt
+expLimit=30
+dateNow=$(date -d "now" +%s)
+
 
 # Update all certs with cli.ini file in folder for Let's Encrypt
 for configFile in $(ls $letsencFolder/*.cli.ini); do
-	echo "Renewing cert using $configFile"
-	../letsencrypt/letsencrypt-auto certonly --renew-by-default --config $configFile
-	echo ""
+	
+	primaryDomain=`grep "^\s*domains" $configFile | sed "s/^\s*domains\s*=\s*//" | sed 's/(\s*)\|,.*$//'`
+	certFile=/etc/letsencrypt/live/$primaryDomain/fullchain.pem
+	
+	expDate=$(date -d "`openssl x509 -in $certFile -text -noout | grep "Not After" | cut -c 25-`" +%s)
+	expDays=$(echo \( $expDate - $dateNow \) / 86400 |bc)
+	
+	if [ "$expDays" -gt "$expLimit" ]
+	then
+		echo "The certificate for $primaryDomain is up to date, no need for renewal, $expDays days left."
+	else
+		echo "Renewing cert for $primaryDomain using $configFile"
+		../letsencrypt/letsencrypt-auto certonly --renew-by-default --config $configFile
+		echo ""
+	fi
 done
+
+systemctl reload nginx
 
