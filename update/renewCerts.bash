@@ -6,7 +6,6 @@ cd $scriptDir
 source ../conf
 
 letsencFolder=/etc/letsencrypt
-expLimit=30
 dateNow=$(date -d "now" +%s)
 
 
