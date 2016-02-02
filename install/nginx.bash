@@ -87,6 +87,11 @@ server {
 	location ~* /(?:uploads|files)/.*\.php$ {
 		deny all;
 	}
+	
+	location ~ ~$ {
+		deny all;
+	}
+	
 	# End og restrictions -----------------
 	
 	location ~ \.php$ {
