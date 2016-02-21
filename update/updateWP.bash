@@ -36,7 +36,13 @@ wp core update-db"
 	echo "Updating plugins for $userName"
 	su - $userName -c "cd $basePath/$userName/wordpress
 wp plugin update --all"
-
+	
+	
+	# Update all plugins as well
+	echo "Updating themes for $userName"
+	su - $userName -c "cd $basePath/$userName/wordpress
+wp theme update --all"
+	
 	echo ""
 done
 
