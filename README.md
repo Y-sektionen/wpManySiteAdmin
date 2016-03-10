@@ -1,15 +1,17 @@
-wpManySiteAdmin
-===========
+Wordpress Mass Administration
+=============================
 
-Scripts for simplified installation, update, monitoring and deletion of Wordpress sites. Each site is after installation automatically upgraded through minor updates and scanned for vulnerabilities using wp-scan and ssl-labs-scan.
+Scripts for simplified installation, maintenance, monitoring and deletion of Wordpress (WP) sites. Each site is after installation automatically upgraded through minor updates and scanned for vulnerabilities using wp-scan and ssl-labs-scan. They're also set up with HTTPS-certificates through Let's Encrypt.
 
 Note: The default installation installs the Active Directory (AD) plugin for Wordpress since AD is commonly used at LiU for user data. This readme does NOT cover AD-plugin configuration since that's specific to each domain.
+
 
 ## License
 
 ```
-CYD-poolen - wp-cli - Scripts for simplified installation, maintaining and
-deletion of Wordpress sites. Copyright (C) 2014,2015 CYD-poolen, Linköping University.
+Wordpress Mass Administration (wp-mass-admin) - Scripts for simplified
+installation, maintenance and deletion of Wordpress sites.
+Copyright (C) 2014 - 2016 CYD-poolen, Linköping University.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,108 +27,114 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ```
 
-## Installing requirements
 
-These scripts are dependent on these components
+## Dependencies
+
+These scripts depend on code from the following projects:
 
 * php5-fpm
 * nginx
 * mysql
-* wp-cli
 * go
 * ruby
+* wp-cli
+* wp-scan
+* letsencrypt
 
 To install most dependencies on Debian Stable:
 
-<pre>
+```bash
 sudo apt-get install php5-cli php5-fpm nginx php5-ldap mysql-server php5-mysql ruby ruby-dev libcurl4-gnutls-dev make golang
-</pre>
+```
 
-**wp-cli**
+### WP-cli
 
-Install wp-cli from the project Github page (preferable using .deb-package), https://github.com/wp-cli/wp-cli/wiki/Alternative-Install-Methods.
+To install wp-cli from the project Github page (preferably using .deb-package), see their [installation page](http://wp-cli.org/docs/installing/).
 
-<pre>
+```bash
 sudo dpkg -i FILE.deb
-</pre>
+```
 
 ## Installation
 
-Clone this repo:
+Clone this repository:
 
-<pre>
-git clone --recursive https://github.com/CYD-poolen/wpManySiteAdmin
-cd wpManySiteAdmin
-</pre>
+```bash
+git clone --recursive https://github.com/CYD-poolen/wp-mass-admin
+cd wp-mass-admin
+```
 
-Complete the installation of wp-scan:
+### WP-scan
 
-<pre>
+```bash
 cd scan/wpscan
 bundle install --without test --path vendor/bundle
-</pre>
+```
 
-**Let's encrypt**
+### Let's encrypt
 
 Run the letsencrypt-auto file in order for Let's encrypt to install its dependencies. 
 
-<pre>
+```bash
 cd letsencrypt
 ./letsencrypt-auto
-</pre>
+```
 
-**Configuration**
+
+## Configuration
 
 Copy the example configuration file.
 
-<pre>
+```bash
 cd ../..
 cp conf.example conf
-</pre>
+```
 
 Enter your desired admin user name, admin user email and basepath for your WP-sites.
 
-<pre>
+```bash
 editor conf
-</pre>
+```
 
-<pre>
+```
 # User info for admin user in WP-installs
 adminUser=admin
 adminMail=admin@example.com
 
 # Basepaths for WP-installs, WP is installed to $basePath/$userName
 basePath=/srv
-</pre>
+```
 
-Add the update and renewCert scripts to roots crontab:
+### Scheduling maintenance scripts
 
-<pre>
+Enter the cron table for the root account:
+
+```bash
 sudo crontab -e
-</pre>
+```
 
-Add this line to check for update once a day, and renew certs once a month at the first:
+Then add these lines to check for wordpress updates once a day, and renew https certificates once a month:
 
-<pre>
-min hour * * * /PATH/TO/PROJECT/DIR/update/updateWP.bash
-min hour 1 * * /PATH/TO/PROJECT/DIR/update/renewCerts.bash
-</pre>
+```crontab
+min hour * * * /PATH/TO/PROJECT/DIR/update/wordpress
+min hour 1 * * /PATH/TO/PROJECT/DIR/update/renew-https-certs
+```
 
 
 ## Installing a Wordpress site
 
-Run the script installWP.bash with username and fully qualified domain name (FQDN) as arguments. IMPORTANT! **The FQDN must be correctly configured and pointing to the host that's running the script.**
+Run the script `install/wordpress-site` with username and fully qualified domain name (FQDN) as arguments. IMPORTANT! **The FQDN must be correctly configured and pointing to the host that's running the script.**
 
-<pre>
-sudo ./installWP.bash USER FQDN
-</pre>
+```bash
+sudo ./install/wordpress-site USER FQDN
+```
 
 The script will output the MySQL and system password for your chosen user. It will also output a password for the Wordpress admin user chosen in the config file.
 
-Add the username for the site to the list of userNames in config file:
+Add the USER for the site to the list of userNames in config file:
 
-<pre>
+```
 # Site name = user name that executes the site.
 userNames="org1 org2"
-</pre>
+```
 
