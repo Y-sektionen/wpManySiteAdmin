@@ -42,7 +42,7 @@ su - $userName -c "
 cd $installDir
 wp core download --locale=sv_SE
 wp core config --dbname=$userName --dbuser=$userName --dbpass=$userPassword --locale=sv_SE
-wp core install --url=$FQDN --title='$userName website' --admin_user=$adminUser --admin_password=$wpAdminPassword --admin_email=$adminMail
+wp core install --url="https://$FQDN" --title='$userName website' --admin_user=$adminUser --admin_password=$wpAdminPassword --admin_email=$adminMail
 wp plugin install active-directory-integration
 wp plugin activate active-directory-integration"
 echo ""
