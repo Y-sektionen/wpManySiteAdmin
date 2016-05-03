@@ -48,8 +48,8 @@ wp plugin activate active-directory-integration"
 echo ""
 
 # Create config files for nginx and uwsgi
-./nginx.bash $userName $FQDN
-./php5-fpm.bash $userName $FQDN
+./nginx $userName $FQDN
+./php5-fpm $userName $FQDN
 
 echo ""
 echo "This is the password for MySQL- and system user $userName:"

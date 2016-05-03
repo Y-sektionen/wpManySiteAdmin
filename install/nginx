@@ -48,7 +48,7 @@ systemctl reload nginx
 # Run letsencrypt to get cert
 echo "Running letsencrypt to generate certificate for site!"
 echo ""
-./letsencrypt.bash $userName $FQDN
+./letsencrypt $userName $FQDN
 
 # SSL conf
 cat >> $configFile << EOF
