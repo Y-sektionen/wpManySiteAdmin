@@ -27,7 +27,7 @@ echo "Please enter root password for MYSQL"
 mysql --user=root -p -e "create database $userName;
 CREATE USER '$userName'@localhost IDENTIFIED BY '$userPassword';
 GRANT ALL PRIVILEGES ON $userName . * TO '$userName'@'localhost';
-UPDATE mysql.user SET max_user_connections=50 WHERE user='$user' AND host='localhost';"
+UPDATE mysql.user SET max_user_connections=50 WHERE user='$userName' AND host='localhost';"
 echo ""
 
 # Create folders for WP. www-data in user group and correct permissions for server to run
