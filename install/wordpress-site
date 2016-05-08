@@ -10,7 +10,12 @@ fi
 
 cd "$(dirname $0)"
 # Read config file with paths to WP-installs and usernames
-source ../conf
+if [[ -e ../conf ]]; then
+    source ../conf
+else
+    echo "Please add a conf file to the root of your wp-mass-admin folder. Instructions can be found in the README.md."
+    exit 2
+fi
 
 userName=$1
 FQDN=$2
