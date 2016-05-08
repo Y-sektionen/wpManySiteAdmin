@@ -76,7 +76,7 @@ bundle install --without test --path vendor/bundle
 Run the letsencrypt-auto file in order for Let's encrypt to install its dependencies. 
 
 ```bash
-cd letsencrypt
+cd ../../letsencrypt
 ./letsencrypt-auto
 ```
 
@@ -86,7 +86,7 @@ cd letsencrypt
 Copy the example configuration file.
 
 ```bash
-cd ../..
+cd ..
 cp conf.example conf
 ```
 
