@@ -19,17 +19,15 @@ install:
 	install -D $(CURDIR)/update/wordpress-site $(SHARE_DIR)/update/wordpress-site
 	install -D $(CURDIR)/update/renew-https-certificates $(SHARE_DIR)/update/renew-https-certificates
 	# Scanner
-	install -D $(CURDIR)/scan/ssllabs-scan $(SHARE_DIR)/scan/ssllabs-scan
+	cp -r $(CURDIR)/scan/ssllabs-scan $(SHARE_DIR)/scan/
+	cp -r $(CURDIR)/scan/wpscan $(SHARE_DIR)/scan/
 	install -D $(CURDIR)/scan/wordpress-site $(SHARE_DIR)/scan/wordpress-site
-	install -D $(CURDIR)/scan/wpscan $(SHARE_DIR)/scan/wpscan
 	# Conf
-	install -D -m 644 $(CURDIR)/conf.example $(ETC_DIR)/default/wpma.conf
+	install -D -m 644 $(CURDIR)/conf.example $(ETC_DIR)/default/wp-mass-admin/wpma.conf
 	[ -s $(ETC_DIR)/wp-mass-admin/wpma.conf ] || install -D -m 644 $(CURDIR)/conf.example $(ETC_DIR)/wp-mass-admin/wpma.conf
 	(echo PATH=/bin:/sbin:/usr/bin:$(BINARY_DIR); cat crontab) > $(CRON_DIR)/wp-mass-admin
 	# Letsencrypt files
-	install -D $(CURDIR)/letsencrypt $(SHARE_DIR)/
-	install -D $(CURDIR)/scan/wpscan $(SHARE_DIR)/
-	install -D $(CURDIR)/scan/ssllabs-scan $(SHARE_DIR)/
+	cp -r $(CURDIR)/letsencrypt $(SHARE_DIR)/
 
 uninstall:
 	rm -f $(BINARY_DIR)/wpma
