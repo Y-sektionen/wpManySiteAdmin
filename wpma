@@ -2,8 +2,6 @@
 
 if [[ "$#" == "0" || "$1" == "help" || "$1" == "--help" ]]
 then
-    echo "$#"
-    echo $1
     echo "Usage: "
     echo "  $0 install|update|scan [arguments]"
     echo ""
