@@ -6,7 +6,10 @@ adminMail=admin@example.com
 basePath=/srv
 
 # Site name = user name that executes the site.
-userNames="org1 org2"
+userNames=""
+
+# Use letsencrypt for HTTPS? If so, DNS records need to be accurate before installing!
+useHttps="no"
 
 # Expiry limit in days before renewing certificates
 expLimit=30
@@ -15,3 +18,4 @@ expLimit=30
 # You don't have to touch the definitions beyond this point.
 ##
 PATH=$PATH:/usr/sbin
+

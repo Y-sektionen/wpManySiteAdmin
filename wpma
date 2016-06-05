@@ -24,6 +24,12 @@ case $operation_class in
             echo ""
             exit 2
         fi
+	
+	if [[ "$(whoami)" != "root" ]]
+	then
+		echo "Install needs to run as root!"
+		exit 5
+	fi
         
         user_name=$2
         fqdn=$3
@@ -40,6 +46,12 @@ case $operation_class in
             exit 3
         fi
         
+	if [[ "$(whoami)" != "root" ]]
+	then
+		echo "Update needs to run as root!"
+		exit 5
+	fi
+        
         user_name=$2
         
         $wpma_folder/update/wp-site $user_name
@@ -52,6 +64,12 @@ case $operation_class in
             echo ""
             exit 4
         fi
+        
+	if [[ "$(whoami)" == "root" ]]
+	then
+		echo "No need to run scan as root!"
+		exit 6
+	fi
         
         $wpma_folder/scan/wp-site
         ;;
