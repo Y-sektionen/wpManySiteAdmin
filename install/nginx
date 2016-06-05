@@ -15,7 +15,10 @@ configFile=/etc/nginx/sites-available/$FQDN
 scriptDir="$(dirname $0)"
 cd $scriptDir
 # Read config file with paths to WP-installs and usernames
-source ../conf
+source /usr/local/default/etc/wp-mass-admin/wpma.conf
+if [[ -e /usr/local/etc/wp-mass-admin/wpma.conf ]]; then
+    source /usr/local/etc/wp-mass-admin/wpma.conf
+fi
 
 # Create configfolder+file
 mkdir -p /var/log/nginx/$FQDN

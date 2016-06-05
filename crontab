@@ -1,0 +1,10 @@
+# wp-mass-admin - Wordpress administration tool for managing many WP-sites
+#minute hour    day     week    month   user    script
+
+# Update WP-sites once a day
+0       23      *       *       *       root    /usr/local/share/wp-mass-admin/update/wordpress-site
+# Renew https certs twice a month
+0       22      1,16    *       *       root    /usr/local/share/wp-mass-admin/update/renew-https-certificates
+# Scan all Wordpress sites for vulnerabilities once a week
+0       0       0       *       *       nobody  /usr/local/share/wp-mass-admin/scan/wpscan
+

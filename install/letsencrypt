@@ -10,11 +10,15 @@ fi
 userName=$1
 FQDN=$2
 configFile=/etc/letsencrypt/"$FQDN".cli.ini
-
 scriptDir="$(dirname $0)"
+
 cd $scriptDir
 # Read config file with paths to WP-installs and usernames
-source ../conf
+source /usr/local/default/etc/wp-mass-admin/wpma.conf
+if [ -e /usr/local/etc/wp-mass-admin/wpma.conf ]
+then
+    source /usr/local/etc/wp-mass-admin/wpma.conf
+fi
 
 # Create configfolder+file if letsencrypt hasn't run yet
 mkdir -p /etc/letsencrypt
