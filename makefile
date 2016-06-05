@@ -24,6 +24,8 @@ install:
 	cp -r $(CURDIR)/scan/ssllabs-scan $(SHARE_DIR)/scan/
 	cp -r $(CURDIR)/scan/wpscan $(SHARE_DIR)/scan/
 	install -D $(CURDIR)/scan/wp-site $(SHARE_DIR)/scan/wp-site
+	# Deleter
+	install -D $(CURDIR)/delete/wp-site $(SHARE_DIR)/delete/wp-site
 	# Conf
 	install -D -m 644 $(CURDIR)/conf.example $(PREFIX)/default/etc/wp-mass-admin/wpma.conf
 	[ -s $(ETC_DIR)/wp-mass-admin/wpma.conf ] || install -D -m 644 $(CURDIR)/conf.example $(ETC_DIR)/wp-mass-admin/wpma.conf

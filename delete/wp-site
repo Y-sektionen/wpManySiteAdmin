@@ -9,8 +9,11 @@ fi
 
 cd "$(dirname $0)"
 # Read config file with paths to WP-installs and usernames
-source ../conf
+source /usr/local/default/etc/wp-mass-admin/wpma.conf
 
+if [[ -e /usr/local/etc/wp-mass-admin/wpma.conf ]]; then
+    source /usr/local/etc/wp-mass-admin/wpma.conf
+fi
 
 userName="$1"
 FQDN="$2"
@@ -28,14 +31,20 @@ rm -f /etc/nginx/sites-enabled/"$FQDN"
 rm -f /etc/nginx/sites-available/"$FQDN"
 rm -f /etc/php5/fpm/pool.d/"$FQDN".conf
 
-# Revoke certificate. Will try to revoke all certs. 
-for certificate in $(ls $letsencryptFolder/archive/$FQDN | grep "cert"); do
-	echo "Revoking cert $certificate"
-	../letsencrypt/letsencrypt-auto revoke --cert-path "$letsencryptFolder"/archive/"$FQDN"/"$certificate"
-	echo ""
-done
-# Remove config for domain
-rm -f "$letsencryptFolder"/"$FQDN".cli.ini
+
+# Revoke certificate if config for site exists. Will try to revoke all certs. 
+if [ -a $letsencryptFolder/$FQDN.cli.ini ]
+then
+	for certificate in $(ls $letsencryptFolder/archive/$FQDN | grep "cert"); do
+		echo "Revoking cert $certificate"
+		../letsencrypt/letsencrypt-auto revoke --cert-path "$letsencryptFolder"/archive/"$FQDN"/"$certificate"
+		echo ""
+	done
+	
+	# Remove config for domain
+	rm -f "$letsencryptFolder"/"$FQDN".cli.ini
+fi
+
 
 # Remove WP-install
 rm -rf "$basePath"/"$userName"
