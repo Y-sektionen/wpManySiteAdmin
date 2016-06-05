@@ -1,4 +1,60 @@
 #!/bin/bash
 
-# Dummy file
+if [[ "$#" == "0" || "$1" == "help" || "$1" == "--help" ]]
+then
+    echo "$#"
+    echo $1
+    echo "Usage: "
+    echo "  $0 install|update|scan [arguments]"
+    echo ""
+    echo "See $0 COMMAND help for info on each subcommand."
+    echo ""
+    exit 1
+fi
+
+operation_class=$1
+wpma_folder=/usr/local/share
+
+case $operation_class in
+    "install")
+        if [[ "$#" != 3 || "$2" == "help" ]]
+        then
+            echo "Usage: "
+            echo "  $0 install USERNAME FQDN"
+            echo ""
+            exit 2
+        fi
+        
+        user_name=$2
+        fqdn=$3
+        
+        $wpma_folder/install/wp-site $user_name $fqdn
+        ;;
+
+    "update")
+        if [[ "$#" != 2 || "$2" == "help" ]]
+        then
+            echo "Usage: "
+            echo "  $0 update USERNAME"
+            echo ""
+            exit 3
+        fi
+        
+        user_name=$2
+        
+        $wpma_folder/update/wp-site $user_name
+        ;;
+    "scan")
+        if [[ "$#" != 1 || "$2" == "help" ]]
+        then
+            echo "Usage: "
+            echo "  $0 scan"
+            echo ""
+            exit 4
+        fi
+        
+        $wpma_folder/scan/wp-site
+        ;;
+esac
+
 
