@@ -13,7 +13,7 @@ then
 fi
 
 operation_class=$1
-wpma_folder=/usr/local/share
+wpma_folder=/usr/local/share/wp-mass-admin
 
 case $operation_class in
     "install")

@@ -14,16 +14,18 @@ install:
 	install -D $(CURDIR)/install/letsencrypt $(SHARE_DIR)/install/letsencrypt
 	install -D $(CURDIR)/install/php5-fpm $(SHARE_DIR)/install/php5-fpm
 	install -D $(CURDIR)/install/nginx $(SHARE_DIR)/install/nginx
-	install -D $(CURDIR)/install/wordpress-site $(SHARE_DIR)/install/wordpress-site
+	install -D $(CURDIR)/install/no-https $(SHARE_DIR)/install/no-https
+	install -D $(CURDIR)/install/use-https $(SHARE_DIR)/install/use-https
+	install -D $(CURDIR)/install/wp-site $(SHARE_DIR)/install/wp-site
 	# Updater
-	install -D $(CURDIR)/update/wordpress-site $(SHARE_DIR)/update/wordpress-site
+	install -D $(CURDIR)/update/wp-site $(SHARE_DIR)/update/wp-site
 	install -D $(CURDIR)/update/renew-https-certificates $(SHARE_DIR)/update/renew-https-certificates
 	# Scanner
 	cp -r $(CURDIR)/scan/ssllabs-scan $(SHARE_DIR)/scan/
 	cp -r $(CURDIR)/scan/wpscan $(SHARE_DIR)/scan/
-	install -D $(CURDIR)/scan/wordpress-site $(SHARE_DIR)/scan/wordpress-site
+	install -D $(CURDIR)/scan/wp-site $(SHARE_DIR)/scan/wp-site
 	# Conf
-	install -D -m 644 $(CURDIR)/conf.example $(ETC_DIR)/default/wp-mass-admin/wpma.conf
+	install -D -m 644 $(CURDIR)/conf.example $(PREFIX)/default/etc/wp-mass-admin/wpma.conf
 	[ -s $(ETC_DIR)/wp-mass-admin/wpma.conf ] || install -D -m 644 $(CURDIR)/conf.example $(ETC_DIR)/wp-mass-admin/wpma.conf
 	(echo PATH=/bin:/sbin:/usr/bin:$(BINARY_DIR); cat crontab) > $(CRON_DIR)/wp-mass-admin
 	# Letsencrypt files
