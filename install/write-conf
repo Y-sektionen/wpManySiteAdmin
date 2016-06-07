@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+new_user=$1
+config_file = /usr/local/etc/wp-mass-admin/wpma.conf
+tmp_file = /tmp/wpma.scratch
+
+for line in $(cat $config_file)
+do
+    if [ $(echo $line | grep "userNames") == 0 ]
+    then
+        $(eval $line)
+        echo $userNames
+    fi
+done

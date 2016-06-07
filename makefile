@@ -17,6 +17,7 @@ install:
 	install -D $(CURDIR)/install/no-https $(SHARE_DIR)/install/no-https
 	install -D $(CURDIR)/install/use-https $(SHARE_DIR)/install/use-https
 	install -D $(CURDIR)/install/wp-site $(SHARE_DIR)/install/wp-site
+	install -D $(CURDIR)/install/write-conf $(SHARE_DIR)/install/write-conf
 	# Updater
 	install -D $(CURDIR)/update/wp-site $(SHARE_DIR)/update/wp-site
 	install -D $(CURDIR)/update/renew-https-certificates $(SHARE_DIR)/update/renew-https-certificates
