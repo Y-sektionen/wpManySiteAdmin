@@ -27,6 +27,9 @@ baseDir=$basePath/$userName
 installDir=$baseDir/wordpress
 socketDir=$baseDir/socket
 
+# Append our user to the config
+./write-conf $userName
+
 # Create user in Linux and MySQL
 useradd -p $(echo $userPassword | openssl passwd -1 -stdin) $userName
 
