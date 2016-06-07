@@ -3,7 +3,7 @@
 if [[ "$#" == "0" || "$1" == "help" || "$1" == "--help" ]]
 then
     echo "Usage: "
-    echo "  $0 install|update|scan [arguments]"
+    echo "  $0 install|update|scan|renew-certs [arguments]"
     echo ""
     echo "See $0 COMMAND help for info on each subcommand."
     echo ""
@@ -36,10 +36,10 @@ case $operation_class in
         ;;
 
     "update")
-        if [[ "$#" != 2 || "$2" == "help" ]]
+        if [[ "$#" != 1 || "$2" == "help" ]]
         then
             echo "Usage: "
-            echo "  $0 update USERNAME"
+            echo "  $0 update"
             echo ""
             exit 3
         fi
@@ -50,9 +50,7 @@ case $operation_class in
 		exit 5
 	fi
         
-        user_name=$2
-        
-        $wpma_folder/update/wp-site $user_name
+        $wpma_folder/update/wp-site
         ;;
     "scan")
         if [[ "$#" != 1 || "$2" == "help" ]]
@@ -93,6 +91,22 @@ case $operation_class in
         $wpma_folder/delete/wp-site $user_name $fqdn
         ;;
 
+    "renew-certs")
+        if [[ "$#" != 1 || "$2" == "help" ]]
+        then
+            echo "Usage: "
+            echo "  $0 renew-certs"
+            echo ""
+            exit 6
+        fi
+        
+	if [[ "$(whoami)" != "root" ]]
+	then
+		echo "Update needs to run as root!"
+		exit 5
+	fi
+        
+        $wpma_folder/update/renew-https-certificates
 esac
 
 

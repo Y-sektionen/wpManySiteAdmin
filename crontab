@@ -1,10 +1,10 @@
 # wp-mass-admin - Wordpress administration tool for managing many WP-sites
-#minute hour    day     week    month   user    script
+#minute hour    day     week    month	dom	user    script
 
 # Update WP-sites once a day
-0       23      *       *       *       root    /usr/local/share/wp-mass-admin/update/wordpress-site
+56       12      *       *       *	*	root    /usr/local/bin/wpma update
 # Renew https certs twice a month
-0       22      1,16    *       *       root    /usr/local/share/wp-mass-admin/update/renew-https-certificates
+56       12      1,16    *       *	*	root    /usr/local/bin/wpma renew-certs
 # Scan all Wordpress sites for vulnerabilities once a week
-0       0       0       *       *       nobody  /usr/local/share/wp-mass-admin/scan/wpscan
+57       12       0       *       *	*	nobody  /usr/local/bin/wpma scan
 
