@@ -62,6 +62,7 @@ Clone this repository:
 ```bash
 git clone --recursive https://github.com/CYD-poolen/wp-mass-admin
 cd wp-mass-admin
+sudo make install
 ```
 
 ### WP-scan
@@ -83,17 +84,10 @@ cd ../../letsencrypt
 
 ## Configuration
 
-Copy the example configuration file.
+Edit the configuration file /usr/local/etc/wp-mass-admin/wpma.conf.
 
 ```bash
-cd ..
-cp conf.example conf
-```
-
-Enter your desired admin user name, admin user email and basepath for your WP-sites.
-
-```bash
-editor conf
+editor /usr/local/etc/wp-mass-admin/wpma.conf
 ```
 
 ```
@@ -105,36 +99,14 @@ adminMail=admin@example.com
 basePath=/srv
 ```
 
-### Scheduling maintenance scripts
-
-Enter the cron table for the root account:
-
-```bash
-sudo crontab -e
-```
-
-Then add these lines to check for wordpress updates once a day, and renew https certificates once a month:
-
-```crontab
-min hour * * * /PATH/TO/PROJECT/DIR/update/wordpress
-min hour 1 * * /PATH/TO/PROJECT/DIR/update/renew-https-certs
-```
-
-
 ## Installing a Wordpress site
 
-Run the script `install/wordpress-site` with username and fully qualified domain name (FQDN) as arguments. IMPORTANT! **The FQDN must be correctly configured and pointing to the host that's running the script.**
+Run wpma with username and fully qualified domain name (FQDN) as arguments. IMPORTANT! **The FQDN must be correctly configured and pointing to the host that's running the script if HTTPS is used.**
 
 ```bash
-sudo ./install/wordpress-site USER FQDN
+sudo wpma install USER FQDN
 ```
 
 The script will output the MySQL and system password for your chosen user. It will also output a password for the Wordpress admin user chosen in the config file.
 
-Add the USER for the site to the list of userNames in config file:
-
-```
-# Site name = user name that executes the site.
-userNames="org1 org2"
-```
 
