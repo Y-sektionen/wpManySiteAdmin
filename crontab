@@ -2,7 +2,7 @@
 #minute hour    dom     week    month	user    script
 
 # Update WP-sites once a day
-55  08  *   *   *   root    /usr/local/bin/wpma update
+00  23  *   *   *   root    /usr/local/bin/wpma update
 # Renew https certs twice a month
 30  23  1   *   *   root    /usr/local/bin/wpma renew-certs
 30  23  16  *   *   root    /usr/local/bin/wpma renew-certs
