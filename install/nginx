@@ -4,7 +4,7 @@ set -e
 if [[ $# != 2 ]]
 then
 		echo "Usage: "
-		echo "	$0 userName fullURLToSite"
+		echo "	$0 userName FQDN"
 		exit 1
 fi
 
@@ -12,18 +12,17 @@ userName=$1
 FQDN=$2
 configFile=/etc/nginx/sites-available/$FQDN
 
-scriptDir="$(dirname $0)"
-cd $scriptDir
+scriptDir=$(dirname "$0")
+cd "$scriptDir"
 # Read config file with paths to WP-installs and usernames
 source /usr/local/default/etc/wp-mass-admin/wpma.conf
 if [[ -e /usr/local/etc/wp-mass-admin/wpma.conf ]]; then
     source /usr/local/etc/wp-mass-admin/wpma.conf
 fi
 
-if [[ "$useHttps" == "yes" ]]
+if [[ $useHttps == "yes" ]]
 then
-	./use-https $userName $FQDN
+	./use-https "$userName" "$FQDN"
 else
-	./no-https $userName $FQDN
+	./no-https "$userName" "$FQDN"
 fi
-

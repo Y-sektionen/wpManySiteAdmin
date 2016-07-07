@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd "$(dirname $0)/.."
+cd "$(dirname "$0")/.."
 # Update the git submodule(s) containing wpscan (and potentially other/future projects) so that we always run the latest version.
 git submodule update --remote
 sites=$(ls /etc/nginx/sites-enabled)
@@ -20,7 +20,7 @@ $wpscan --update
 for site in $sites; do
 	echo "________________________________________________________"
 	echo "Scanning $site for WordPress vulnerabilities using wpscan:"
-	$wpscan -u $site --follow-redirection -e u,vt,vp
+	$wpscan -u "$site" --follow-redirection -e u,vt,vp
 	echo "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾"
 done
 
@@ -36,6 +36,6 @@ fi
 for site in $sites; do
 	echo "________________________________________________________"
 	echo "Checking $site HTTPS vulnerabilities using ssllabs-scan:"
-	./ssllabs-scan --usecache --grade --verbosity error $site
+	./ssllabs-scan --usecache --grade --verbosity error "$site"
 	echo "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾"
 done

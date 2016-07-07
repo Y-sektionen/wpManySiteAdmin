@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ "$#" == "0" || "$1" == "help" || "$1" == "--help" ]]
+if [[ $# == 0 || $1 == "help" || $1 == "--help" ]]
 then
     echo "Usage: "
     echo "  $0 install|update|scan|renew-certs [arguments]"
@@ -14,99 +14,97 @@ operation_class=$1
 wpma_folder=/usr/local/share/wp-mass-admin
 
 case $operation_class in
-    "install")
-        if [[ "$#" != 3 || "$2" == "help" ]]
+    install)
+        if [[ $# != 3 || $2 == "help" ]]
         then
             echo "Usage: "
             echo "  $0 install USERNAME FQDN"
             echo ""
             exit 2
         fi
-	
-	if [[ "$(whoami)" != "root" ]]
+
+	if [[ $(whoami) != "root" ]]
 	then
 		echo "Install needs to run as root!"
 		exit 5
 	fi
-        
+
         user_name=$2
         fqdn=$3
-        
-        $wpma_folder/install/wp-site $user_name $fqdn
+
+        "$wpma_folder/install/wp-site" "$user_name" "$fqdn"
         ;;
 
-    "update")
-        if [[ "$#" != 1 || "$2" == "help" ]]
+    update)
+        if [[ $# != 1 || $2 == "help" ]]
         then
             echo "Usage: "
             echo "  $0 update"
             echo ""
             exit 3
         fi
-        
-	if [[ "$(whoami)" != "root" ]]
+
+	if [[ $(whoami) != "root" ]]
 	then
 		echo "Update needs to run as root!"
 		exit 5
 	fi
-        
-        $wpma_folder/update/wp-site
+
+        "$wpma_folder/update/wp-site"
         ;;
-    "scan")
-        if [[ "$#" != 1 || "$2" == "help" ]]
+    scan)
+        if [[ $# != 1 || $2 == "help" ]]
         then
             echo "Usage: "
             echo "  $0 scan"
             echo ""
             exit 4
         fi
-        
-	if [[ "$(whoami)" == "root" ]]
+
+	if [[ $(whoami) == "root" ]]
 	then
 		echo "No need to run scan as root!"
 		exit 6
 	fi
-        
-        $wpma_folder/scan/wp-site
+
+        "$wpma_folder/scan/wp-site"
         ;;
-	
-    "delete")
-        if [[ "$#" != 3 || "$2" == "help" ]]
+
+    delete)
+        if [[ $# != 3 || $2 == "help" ]]
         then
             echo "Usage: "
             echo "  $0 delete USERNAME FQDN"
             echo ""
             exit 2
         fi
-	
-	if [[ "$(whoami)" != "root" ]]
+
+	if [[ $(whoami) != "root" ]]
 	then
 		echo "Install needs to run as root!"
 		exit 5
 	fi
-        
+
         user_name=$2
         fqdn=$3
-        
-        $wpma_folder/delete/wp-site $user_name $fqdn
+
+        "$wpma_folder/delete/wp-site" "$user_name" "$fqdn"
         ;;
 
-    "renew-certs")
-        if [[ "$#" != 1 || "$2" == "help" ]]
+    renew-certs)
+        if [[ $# != 1 || $2 == "help" ]]
         then
             echo "Usage: "
             echo "  $0 renew-certs"
             echo ""
             exit 6
         fi
-        
-	if [[ "$(whoami)" != "root" ]]
+
+	if [[ $(whoami) != "root" ]]
 	then
 		echo "Cert renewal needs to run as root!"
 		exit 5
 	fi
-        
-        $wpma_folder/update/renew-https-certificates
+
+        "$wpma_folder"/update/renew-https-certificates
 esac
-
-

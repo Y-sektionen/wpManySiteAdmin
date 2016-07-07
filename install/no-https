@@ -4,7 +4,7 @@ set -e
 if [[ $# != 2 ]]
 then
 		echo "Usage: "
-		echo "	$0 userName fullURLToSite"
+		echo "	$0 userName FQDN"
 		exit 1
 fi
 
@@ -12,58 +12,57 @@ userName=$1
 FQDN=$2
 configFile=/etc/nginx/sites-available/$FQDN
 
-scriptDir="$(dirname $0)"
-cd $scriptDir
+scriptDir=$(dirname "$0")
+cd "$scriptDir"
 # Read config file with paths to WP-installs and usernames
 source /usr/local/default/etc/wp-mass-admin/wpma.conf
 if [[ -e /usr/local/etc/wp-mass-admin/wpma.conf ]]; then
     source /usr/local/etc/wp-mass-admin/wpma.conf
 fi
 
-# Create logfolder+configfile
-mkdir -p /var/log/nginx/$FQDN
-touch $configFile
+# Create logfolder
+mkdir -p /var/log/nginx/"$FQDN"
 
 # SSL conf
-cat >> $configFile << EOF
+cat >> "$configFile" << EOF
 server {
 	listen 80;
 	server_name $FQDN;
-	
+
 	add_header Cache-Control "public";
-	
+
 	error_log /var/log/nginx/$FQDN/error.log;
 	access_log /var/log/nginx/$FQDN/access.log;
-	
+
 	root $basePath/$userName/wordpress;
 	index index.php index.html index.htm;
 	client_max_body_size 50m;
-	
-	
+
+
 	location = /favicon.ico {
 		log_not_found off;
 		access_log off;
 	}
-	
+
 	# Allow robots to scan without flooding server
 	location = /robots.txt {
 		allow all;
 		log_not_found off;
 		access_log off;
 	}
-	
+
 	# Deny access to any files with a .php extension in the uploads directory
 	# Works in sub-directory installs and also in multisite network
 	location ~* /(?:uploads|files)/.*\.php$ {
 		deny all;
 	}
-	
+
 	location ~ ~$ {
 		deny all;
 	}
-	
+
 	# End og restrictions -----------------
-	
+
 	location ~ \.php$ {
 		try_files \$uri =404;
 		fastcgi_pass unix:/srv/$userName/socket/php-fpm.sock;
@@ -76,7 +75,6 @@ server {
 EOF
 
 # If site is not enabled already, enable it
-ln -sf $configFile /etc/nginx/sites-enabled
+ln -sf "$configFile" /etc/nginx/sites-enabled
 # Enable site by reloading
 systemctl reload nginx
-

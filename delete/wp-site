@@ -7,7 +7,7 @@ then
 	exit 1
 fi
 
-cd "$(dirname $0)"
+cd "$(dirname "$0")"
 # Read config file with paths to WP-installs and usernames
 source /usr/local/default/etc/wp-mass-admin/wpma.conf
 
@@ -27,31 +27,30 @@ mysql --user=root -p -e "drop database $userName;
 drop user '$userName'@'localhost';"
 
 # Remove configs
-rm -f /etc/nginx/sites-enabled/"$FQDN"
-rm -f /etc/nginx/sites-available/"$FQDN"
-rm -f /etc/php5/fpm/pool.d/"$FQDN".conf
+rm -f /etc/nginx/sites-enabled/"${FQDN:?}"
+rm -f /etc/nginx/sites-available/"${FQDN:?}"
+rm -f /etc/php5/fpm/pool.d/"${FQDN:?}".conf
 
 
-# Revoke certificate if config for site exists. Will try to revoke all certs. 
-if [ -a $letsencryptFolder/$FQDN.cli.ini ]
+# Revoke certificate if config for site exists. Will try to revoke all certs.
+if [[ -a $letsencryptFolder/$FQDN.cli.ini ]]
 then
-	for certificate in $(ls $letsencryptFolder/archive/$FQDN | grep "cert"); do
+	for certificate in $letsencryptFolder/archive/$FQDN/cert*; do
 		echo "Revoking cert $certificate"
 		../letsencrypt/letsencrypt-auto revoke --cert-path "$letsencryptFolder"/archive/"$FQDN"/"$certificate"
 		echo ""
 	done
-	
+
 	# Remove config for domain
-	rm -f "$letsencryptFolder"/"$FQDN".cli.ini
+	rm -f "${letsencryptFolder:?}"/"${FQDN:?}".cli.ini
 fi
 
 
 # Remove WP-install
-rm -rf "$basePath"/"$userName"
-rm -rf /home/"$userName"/.wp-cli
+rm -rf "${basePath:?}"/"${userName:?}"
+rm -rf /home/"${userName:?}"/.wp-cli
 
 # Clean wp-mass-admin config
-./write-conf $userName
+./write-conf "$userName"
 
 systemctl reload nginx php5-fpm
-

@@ -9,12 +9,12 @@ touch $tmp_file
 
 while read line
 do
-    echo $line | grep "userNames" >> /dev/null
-    if [ $? != 0 ]
+
+    if echo "$line" | grep "userNames" >> /dev/null
     then
-	echo $line >> $tmp_file
+	echo "$line" >> $tmp_file
     else
-	userNames="$(echo $line | sed -e 's/userNames=//g' | tr -d '"')"
+	userNames="$(echo "$line" | sed -e 's/userNames=//g' | tr -d '"')"
 	echo -n "userNames=\"" >> $tmp_file
 	for user in $userNames
 	do
@@ -27,5 +27,3 @@ done < $config_file
 
 cat $tmp_file > $config_file
 rm $tmp_file
-
-
