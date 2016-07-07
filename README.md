@@ -1,9 +1,7 @@
 Wordpress Mass Administration
 =============================
 
-Scripts for simplified installation, maintenance, monitoring and deletion of Wordpress (WP) sites. Each site is after installation automatically upgraded through minor updates and scanned for vulnerabilities using wp-scan and ssl-labs-scan. They're also set up with HTTPS-certificates through Let's Encrypt.
-
-Note: The default installation installs the Active Directory (AD) plugin for Wordpress since AD is commonly used at LiU for user data. This readme does NOT cover AD-plugin configuration since that's specific to each domain.
+Scripts for simplified installation, maintenance, monitoring and deletion of Wordpress (WP) sites. Each site is after installation automatically upgraded through minor updates and scanned for vulnerabilities using wp-scan and ssl-labs-scan. Optionally sites can also be set up with HTTPS-certificates through Let's Encrypt or Active Directory support.
 
 
 ## License
