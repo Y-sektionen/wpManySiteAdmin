@@ -64,9 +64,10 @@ server {
 	ssl_certificate_key /etc/letsencrypt/live/$FQDN/privkey.pem;
 	
 	add_header Cache-Control "public";
-	
-	error_log /var/log/nginx/$FQDN/error.log;
-	access_log /var/log/nginx/$FQDN/access.log;
+	add_header Pragma public;
+
+	error_log /var/log/nginx/$FQDN.error.log;
+	access_log /var/log/nginx/$FQDN.access.log;
 	
 	root $basePath/$userName/wordpress;
 	index index.php index.html index.htm;
@@ -95,7 +96,7 @@ server {
 		deny all;
 	}
 	
-	# End og restrictions -----------------
+	# End o restrictions -----------------
 	
 	location ~ \.php$ {
 		try_files \$uri =404;

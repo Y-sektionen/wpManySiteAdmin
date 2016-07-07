@@ -29,9 +29,9 @@ install:
 	install -D $(CURDIR)/delete/wp-site $(SHARE_DIR)/delete/wp-site
 	install -D $(CURDIR)/delete/write-conf $(SHARE_DIR)/delete/write-conf
 	# Conf
-	install -D -m 644 $(CURDIR)/conf.example $(PREFIX)/default/etc/wp-mass-admin/wpma.conf
-	[ -s $(ETC_DIR)/wp-mass-admin/wpma.conf ] || install -D -m 644 $(CURDIR)/conf.example $(ETC_DIR)/wp-mass-admin/wpma.conf
-	(echo PATH=/bin:/sbin:/usr/bin:$(BINARY_DIR); cat crontab) > $(CRON_DIR)/wp-mass-admin
+	install -D -m 644 $(CURDIR)/common/conf.example $(PREFIX)/default/etc/wp-mass-admin/wpma.conf
+	[ -s $(ETC_DIR)/wp-mass-admin/wpma.conf ] || install -D -m 644 $(CURDIR)/common/conf.example $(ETC_DIR)/wp-mass-admin/wpma.conf
+	(echo PATH=/bin:/sbin:/usr/bin:$(BINARY_DIR); cat $(CURDIR)/common/crontab) > $(CRON_DIR)/wp-mass-admin
 	# Letsencrypt files
 	cp -r $(CURDIR)/letsencrypt $(SHARE_DIR)/
 
