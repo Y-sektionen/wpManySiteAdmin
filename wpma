@@ -102,7 +102,7 @@ case $operation_class in
         
 	if [[ "$(whoami)" != "root" ]]
 	then
-		echo "Update needs to run as root!"
+		echo "Cert renewal needs to run as root!"
 		exit 5
 	fi
         

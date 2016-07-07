@@ -50,5 +50,8 @@ fi
 rm -rf "$basePath"/"$userName"
 rm -rf /home/"$userName"/.wp-cli
 
+# Clean wp-mass-admin config
+./write-conf $userName
+
 systemctl reload nginx php5-fpm
 

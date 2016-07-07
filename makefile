@@ -27,6 +27,7 @@ install:
 	install -D $(CURDIR)/scan/wp-site $(SHARE_DIR)/scan/wp-site
 	# Deleter
 	install -D $(CURDIR)/delete/wp-site $(SHARE_DIR)/delete/wp-site
+	install -D $(CURDIR)/delete/write-conf $(SHARE_DIR)/delete/write-conf
 	# Conf
 	install -D -m 644 $(CURDIR)/conf.example $(PREFIX)/default/etc/wp-mass-admin/wpma.conf
 	[ -s $(ETC_DIR)/wp-mass-admin/wpma.conf ] || install -D -m 644 $(CURDIR)/conf.example $(ETC_DIR)/wp-mass-admin/wpma.conf
