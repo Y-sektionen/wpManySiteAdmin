@@ -14,6 +14,9 @@ useHttps="no"
 # Expiry limit in days before renewing certificates
 expLimit=30
 
+# Whether to install WP plugin for active directory or not
+active_directory="no"
+
 ##
 # You don't have to touch the definitions beyond this point.
 ##

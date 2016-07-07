@@ -46,15 +46,22 @@ chown -R $userName:www-data $baseDir
 chmod -R 750 $baseDir
 chmod -R g+s $baseDir
 
-echo "Installing Wordpress + AD-plugin"
-# Install Wordpress + AD plugin using wp-cli
+echo "Installing Wordpress"
+# Install Wordpress 
 su - $userName -c "
 cd $installDir
 wp core download --locale=sv_SE
 wp core config --dbname=$userName --dbuser=$userName --dbpass=$userPassword --locale=sv_SE
-wp core install --url="https://$FQDN" --title='$userName website' --admin_user=$adminUser --admin_password=$wpAdminPassword --admin_email=$adminMail
+wp core install --url="https://$FQDN" --title='$userName website' --admin_user=$adminUser --admin_password=$wpAdminPassword --admin_email=$adminMail"
+
+# Installing AD plugin for Wordpress
+echo "Installing AD-plugin"
+if [[ $active_directory == "yes" ]]
+then
+    su $username -c "cd $installDir
 wp plugin install active-directory-integration
 wp plugin activate active-directory-integration"
+fi
 echo ""
 
 # Create config files for nginx and uwsgi
