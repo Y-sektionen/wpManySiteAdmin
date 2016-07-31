@@ -8,7 +8,7 @@ basePath=/srv
 # Site name = user name that executes the site.
 userNames=""
 
-# Use letsencrypt for HTTPS? If so, DNS records need to be accurate before installing!
+# Use letsencrypt for HTTPS? If so, _global_ DNS records need to point to this server before installing!
 useHttps="no"
 
 # Expiry limit in days before renewing certificates

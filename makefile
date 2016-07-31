@@ -32,6 +32,8 @@ install:
 	install -D -m 644 $(CURDIR)/common/conf.example $(PREFIX)/default/etc/wp-mass-admin/wpma.conf
 	[ -s $(ETC_DIR)/wp-mass-admin/wpma.conf ] || install -D -m 644 $(CURDIR)/common/conf.example $(ETC_DIR)/wp-mass-admin/wpma.conf
 	(echo PATH=/bin:/sbin:/usr/bin:$(BINARY_DIR); cat $(CURDIR)/common/crontab) > $(CRON_DIR)/wp-mass-admin
+	mkdir -p /etc/nginx/includes
+	install -D $(CURDIR)/common/nginx-include.conf /etc/nginx/includes/wpma-includes.conf
 	# Letsencrypt files
 	cp -r $(CURDIR)/letsencrypt $(SHARE_DIR)/
 

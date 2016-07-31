@@ -3,7 +3,7 @@
 if [[ $# == 0 || $1 == "help" || $1 == "--help" ]]
 then
     echo "Usage: "
-    echo "  $0 install|update|scan|renew-certs [arguments]"
+    echo "  $0 install|update|scan|renew-certs|delete [arguments]"
     echo ""
     echo "See $0 COMMAND help for info on each subcommand."
     echo ""
@@ -81,7 +81,7 @@ case $operation_class in
 
 	if [[ $(whoami) != "root" ]]
 	then
-		echo "Install needs to run as root!"
+		echo "Delete needs to run as root!"
 		exit 5
 	fi
 

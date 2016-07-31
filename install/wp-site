@@ -23,11 +23,19 @@ fi
 
 userName=$1
 FQDN=$2
-userPassword=$(echo -n $RANDOM | md5sum | awk "{'print $1'}")
-wpAdminPassword=$(echo -n $RANDOM | md5sum | awk "{'print $1'}")
+userPassword=$(echo -n $RANDOM | md5sum | awk '{print $1}')
+wpAdminPassword=$(echo -n $RANDOM | md5sum | awk '{print $1}')
 baseDir=$basePath/$userName
 installDir=$baseDir/wordpress
 socketDir=$baseDir/socket
+protocol="https://"
+
+if [[ $useHttps == "yes" ]]
+then
+    protocol="https"
+else
+    protocol="http"
+fi
 
 # Append our user to the config
 ./write-conf "$userName"
@@ -54,7 +62,7 @@ su - "$userName" -c "
 cd '$installDir'
 wp core download --locale=sv_SE
 wp core config --dbname='$userName' --dbuser=$userName --dbpass='$userPassword' --locale=sv_SE
-wp core install --url='https://$FQDN' --title='$userName website' --admin_user='$adminUser' --admin_password='$wpAdminPassword' --admin_email='$adminMail'"
+wp core install --url='$protocol://$FQDN' --title='$userName website' --admin_user='$adminUser' --admin_password='$wpAdminPassword' --admin_email='$adminMail'"
 
 # Installing AD plugin for Wordpress
 if [[ $active_directory == "yes" ]]

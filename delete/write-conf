@@ -4,21 +4,22 @@ old_user="$1"
 config_file="/usr/local/etc/wp-mass-admin/wpma.conf"
 tmp_file="/tmp/wpma.scratch"
 
-rm -f "${tmp_file:?}"
-touch "$tmp_file"
+rm -f $tmp_file
+touch $tmp_file
 
 while read line
 do
-    if echo "$line" | grep "userNames" >> /dev/null
+    echo $line | grep "userNames" >> /dev/null
+    if [ $? != 0 ]
     then
-	echo "$line" >> "$tmp_file"
+	echo $line >> $tmp_file
     else
-	IFS=', ' read -r -a userNames <<< "$(echo "$line" | sed -e 's/userNames=//g' | tr -d '"')"
-    last_user=${userNames[${#userNames[@]}-1]}
+	IFS=', ' read -r -a userNames <<< "$(echo $line | sed -e 's/userNames=//g' | tr -d '"')"
+    last_user=${userNames[${#userNames[@]}-1]} 
     i=2
-    while [[ $last_user == "$old_user" && $last_user != ${userNames[0]} ]]
+    while [[ $last_user == $old_user && $last_user != ${userNames[0]} ]]
     do
-        last_user=${userNames[${#userNames[@]}-$i]}
+        last_user=${userNames[${#userNames[@]}-$i]} 
         i=$((i+1))
     done
 
@@ -41,3 +42,5 @@ done < $config_file
 
 cat $tmp_file > $config_file
 rm $tmp_file
+
+
