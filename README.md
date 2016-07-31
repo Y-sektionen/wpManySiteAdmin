@@ -90,11 +90,11 @@ editor /usr/local/etc/wp-mass-admin/wpma.conf
 
 ```
 # User info for admin user in WP-installs
-adminUser=admin
-adminMail=admin@example.com
+admin_user=admin
+admin_mail=admin@example.com
 
-# Basepaths for WP-installs, WP is installed to $basePath/$userName
-basePath=/srv
+# Basepaths for WP-installs, WP is installed to $base_path/$user_name
+base_path=/srv
 ```
 
 ## Installing a Wordpress site
