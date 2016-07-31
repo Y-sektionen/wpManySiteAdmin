@@ -13,11 +13,21 @@ source /usr/local/default/etc/wp-mass-admin/wpma.conf
 
 if [[ -e /usr/local/etc/wp-mass-admin/wpma.conf ]]; then
     source /usr/local/etc/wp-mass-admin/wpma.conf
+else
+    echo "Please add a config file to your /usr/local/etc/wp-mass-admin folder. Instructions can be found in the README."
+    exit 2
 fi
 
 userName="$1"
 FQDN="$2"
 letsencryptFolder=/etc/letsencrypt
+
+# Check that it is a site listed in config
+echo $userNames | grep "$userName" > /dev/null
+if [ $? != 0 ]; then
+    echo "FATAL: User not in config file, will not remove site. Exiting!"
+    exit 3
+fi
 
 # Remove users and DBs
 userdel "$userName"
