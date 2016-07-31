@@ -1,18 +1,18 @@
 # User info for admin user in WP-installs
-adminUser=admin
-adminMail=admin@example.com
+admin_user=admin
+admin_mail=admin@example.com
 
 # Basepaths for WP-installs, WP is installed to $basePath/$userName
-basePath=/srv
+base_path=/srv
 
 # Site name = user name that executes the site.
-userNames=""
+user_names=""
 
 # Use letsencrypt for HTTPS? If so, _global_ DNS records need to point to this server before installing!
-useHttps="no"
+use_https="no"
 
 # Expiry limit in days before renewing certificates
-expLimit=30
+exp_limit=30
 
 # Whether to install WP plugin for active directory or not
 active_directory="no"

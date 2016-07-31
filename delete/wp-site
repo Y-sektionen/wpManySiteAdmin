@@ -3,7 +3,7 @@
 if [[ $# != 2 || $S1 == "-h" || $S1 == "--help" ]]
 then
 	echo "Usage: "
-	echo "	$0 userName FQDN"
+	echo "	$0 user_name FQDN"
 	exit 1
 fi
 
@@ -18,23 +18,23 @@ else
     exit 2
 fi
 
-userName="$1"
+user_name="$1"
 FQDN="$2"
-letsencryptFolder=/etc/letsencrypt
+letsencrypt_folder=/etc/letsencrypt
 
 # Check that it is a site listed in config
-echo $userNames | grep "$userName" > /dev/null
+echo $user_names | grep "$userName" > /dev/null
 if [ $? != 0 ]; then
     echo "FATAL: User not in config file, will not remove site. Exiting!"
     exit 3
 fi
 
 # Remove users and DBs
-userdel "$userName"
-groupdel "$userName"
+userdel "$user_name"
+groupdel "$user_name"
 echo "Please enter root password for MYSQL: "
-mysql --user=root -p -e "drop database $userName;
-drop user '$userName'@'localhost';"
+mysql --user=root -p -e "drop database $user_name;
+drop user '$user_name'@'localhost';"
 
 # Remove configs
 rm -f /etc/nginx/sites-enabled/"${FQDN:?}"
@@ -43,24 +43,24 @@ rm -f /etc/php5/fpm/pool.d/"${FQDN:?}".conf
 
 
 # Revoke certificate if config for site exists. Will try to revoke all certs.
-if [[ -a $letsencryptFolder/$FQDN.cli.ini ]]
+if [[ -a $letsencrypt_folder/$FQDN.cli.ini ]]
 then
-	for certificate in $letsencryptFolder/archive/$FQDN/cert*; do
+	for certificate in $letsencrypt_folder/archive/$FQDN/cert*; do
 		echo "Revoking cert $certificate"
-		../letsencrypt/letsencrypt-auto revoke --cert-path "$letsencryptFolder"/archive/"$FQDN"/"$certificate"
+		../letsencrypt/letsencrypt-auto revoke --cert-path "$letsencrypt_folder"/archive/"$FQDN"/"$certificate"
 		echo ""
 	done
 
 	# Remove config for domain
-	rm -f "${letsencryptFolder:?}"/"${FQDN:?}".cli.ini
+	rm -f "${letsencrypt_folder:?}"/"${FQDN:?}".cli.ini
 fi
 
 
 # Remove WP-install
-rm -rf "${basePath:?}"/"${userName:?}"
-rm -rf /home/"${userName:?}"/.wp-cli
+rm -rf "${base_path:?}"/"${user_name:?}"
+rm -rf /home/"${user_name:?}"/.wp-cli
 
 # Clean wp-mass-admin config
-./write-conf "$userName"
+./write-conf "$user_name"
 
 systemctl reload nginx php5-fpm

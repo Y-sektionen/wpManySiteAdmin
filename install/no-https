@@ -4,16 +4,16 @@ set -e
 if [[ $# != 2 ]]
 then
 		echo "Usage: "
-		echo "	$0 userName FQDN"
+		echo "	$0 user_name FQDN"
 		exit 1
 fi
 
-userName=$1
+user_name=$1
 FQDN=$2
-configFile=/etc/nginx/sites-available/$FQDN
+config_file=/etc/nginx/sites-available/$FQDN
+script_dir=$(dirname "$0")
 
-scriptDir=$(dirname "$0")
-cd "$scriptDir"
+cd "$script_dir"
 # Read config file with paths to WP-installs and usernames
 source /usr/local/default/etc/wp-mass-admin/wpma.conf
 if [[ -e /usr/local/etc/wp-mass-admin/wpma.conf ]]; then
@@ -24,7 +24,7 @@ fi
 mkdir -p /var/log/nginx/"$FQDN"
 
 # SSL conf
-cat >> "$configFile" << EOF
+cat >> "$config_file" << EOF
 server {
 	listen 80;
 	server_name $FQDN;
@@ -32,14 +32,14 @@ server {
 	error_log /var/log/nginx/$FQDN/error.log;
 	access_log /var/log/nginx/$FQDN/access.log;
 
-	root $basePath/$userName/wordpress;
+	root $base_path/$user_name/wordpress;
 	index index.php index.html index.htm;
     
     include includes/wpma-includes.conf;
     
 	location ~ \.php$ {
 		try_files \$uri =404;
-		fastcgi_pass unix:/srv/$userName/socket/php-fpm.sock;
+		fastcgi_pass unix:/srv/$user_name/socket/php-fpm.sock;
 		fastcgi_index index.php;
 		fastcgi_param	SCRIPT_FILENAME	\$document_root/\$fastcgi_script_name;
 		include fastcgi_params;
@@ -49,6 +49,6 @@ server {
 EOF
 
 # If site is not enabled already, enable it
-ln -sf "$configFile" /etc/nginx/sites-enabled
+ln -sf "$config_file" /etc/nginx/sites-enabled
 # Enable site by reloading
 systemctl reload nginx

@@ -9,22 +9,22 @@ touch $tmp_file
 
 while read line
 do
-    echo $line | grep "userNames" >> /dev/null
+    echo $line | grep "user_names" >> /dev/null
     if [ $? != 0 ]
     then
 	echo $line >> $tmp_file
     else
-	IFS=', ' read -r -a userNames <<< "$(echo $line | sed -e 's/userNames=//g' | tr -d '"')"
-    last_user=${userNames[${#userNames[@]}-1]} 
+	IFS=', ' read -r -a user_names <<< "$(echo $line | sed -e 's/user_names=//g' | tr -d '"')"
+    last_user=${user_names[${#user_names[@]}-1]} 
     i=2
-    while [[ $last_user == $old_user && $last_user != ${userNames[0]} ]]
+    while [[ $last_user == $old_user && $last_user != ${user_names[0]} ]]
     do
-        last_user=${userNames[${#userNames[@]}-$i]} 
+        last_user=${user_names[${#user_names[@]}-$i]} 
         i=$((i+1))
     done
 
-	echo -n "userNames=\"" >> $tmp_file
-	for user in $userNames
+	echo -n "user_names=\"" >> $tmp_file
+	for user in $user_names
 	do
         if [[ $user != $old_user ]]
         then

@@ -4,16 +4,16 @@ set -e
 if [[ $# != 2 ]]
 then
 		echo "Usage: "
-		echo "	$0 userName fullURLToSite"
+		echo "	$0 user_name fullURLToSite"
 		exit 1
 fi
 
-userName=$1
+user_name=$1
 FQDN=$2
-configFile=/etc/nginx/sites-available/$FQDN
+config_file=/etc/nginx/sites-available/$FQDN
 
-scriptDir=$(dirname "$0")
-cd "$scriptDir"
+script_dir=$(dirname "$0")
+cd "$script_dir"
 
 # Read config file with paths to WP-installs and usernames
 source /usr/local/default/etc/wp-mass-admin/wpma.conf
@@ -23,15 +23,15 @@ fi
 
 # Create configfolder+file
 mkdir -p /var/log/nginx/"$FQDN"
-touch "$configFile"
+touch "$config_file"
 
 # Initial conf for letsencrypt to work
-cat > "$configFile" << EOF
+cat > "$config_file" << EOF
 server {
 	listen 80;
 	server_name $FQDN *.$FQDN;
 
-	root $basePath/$userName/wordpress;
+	root $base_path/$user_name/wordpress;
 
 	location ~* .well-known* {
 	autoindex on;
@@ -45,17 +45,17 @@ server {
 EOF
 
 # If site is not enabled already, enable it
-ln -sf "$configFile" /etc/nginx/sites-enabled
+ln -sf "$config_file" /etc/nginx/sites-enabled
 # Reload nginx so that letsencrypt can get cert
 systemctl reload nginx
 
 # Run letsencrypt to get cert
 echo "Running letsencrypt to generate certificate for site!"
 echo ""
-./letsencrypt "$userName" "$FQDN"
+./letsencrypt "$user_name" "$FQDN"
 
 # SSL conf
-cat >> "$configFile" << EOF
+cat >> "$config_file" << EOF
 server {
 	listen 443;
 	server_name $FQDN;
@@ -68,14 +68,14 @@ server {
 	error_log /var/log/nginx/$FQDN.error.log;
 	access_log /var/log/nginx/$FQDN.access.log;
 
-	root $basePath/$userName/wordpress;
+	root $base_path/$user_name/wordpress;
 	index index.php index.html index.htm;
     
     include includes/wpma-includes.conf;
 
 	location ~ \.php$ {
 		try_files \$uri =404;
-		fastcgi_pass unix:/srv/$userName/socket/php-fpm.sock;
+		fastcgi_pass unix:/srv/$user_name/socket/php-fpm.sock;
 		fastcgi_index index.php;
 		fastcgi_param	SCRIPT_FILENAME	\$document_root/\$fastcgi_script_name;
 		include fastcgi_params;
