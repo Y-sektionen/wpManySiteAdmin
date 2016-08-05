@@ -45,14 +45,23 @@ rm -f /etc/php5/fpm/pool.d/"${FQDN:?}".conf
 # Revoke certificate if config for site exists. Will try to revoke all certs.
 if [[ -a $letsencrypt_folder/$FQDN.cli.ini ]]
 then
-	for certificate in $letsencrypt_folder/archive/$FQDN/cert*; do
-		echo "Revoking cert $certificate"
-		../letsencrypt/letsencrypt-auto revoke --cert-path "$letsencrypt_folder"/archive/"$FQDN"/"$certificate"
-		echo ""
-	done
+    read "Found letsencrypt init file. Should I revoke the certificate for the site? (yes/no)" user_answer
+    while [[ "$user_answer" != "yes" && "$user_answer" != "no" ]]
+    do
+        echo "Please enter yes or no!"
+        read user_answer
+    done
+    if [[ "$user_answer" == "yes" ]]
+    then
+	    for certificate in $letsencrypt_folder/archive/$FQDN/cert*; do
+		    echo "Revoking cert $certificate"
+		    ../letsencrypt/letsencrypt-auto revoke --cert-path "$letsencrypt_folder"/archive/"$FQDN"/"$certificate"
+		    echo ""
+	    done
 
-	# Remove config for domain
-	rm -f "${letsencrypt_folder:?}"/"${FQDN:?}".cli.ini
+	    # Remove config for domain
+	    rm -f "${letsencrypt_folder:?}"/"${FQDN:?}".cli.ini
+    fi
 fi
 
 
