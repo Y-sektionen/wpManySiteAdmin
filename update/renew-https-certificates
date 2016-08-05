@@ -1,7 +1,7 @@
 #!/bin/bash
 
-scriptDir=$(dirname "$0")
-cd "$scriptDir"
+script_dir=$(dirname "$0")
+cd "$script_dir"
 
 # Read config file with paths to WP-installs and usernames
 source /usr/local/default/etc/wp-mass-admin/wpma.conf
@@ -9,10 +9,10 @@ if [[ -e /usr/local/etc/wp-mass-admin/wpma.conf ]]; then
     source /usr/local/etc/wp-mass-admin/wpma.conf
 fi
 
-letsencFolder=/etc/letsencrypt
-dateNow=$(date -d "now" +%s)
+letsencrypt_folder=/etc/letsencrypt
+date_now=$(date -d "now" +%s)
 
-if [[ -z $expLimit ]]
+if [[ -z $exp_limit ]]
 then
 	echo "Expiry date not set in conf. See conf.example for example."
 	exit 1
@@ -20,20 +20,20 @@ fi
 
 
 # Update all certs with cli.ini file in folder for Let's Encrypt
-for configFile in $letsencFolder/*.cli.ini; do
+for configFile in $letsencrypt_folder/*.cli.ini; do
 
-	primaryDomain=$(grep "^\s*domains" "$configFile" | sed "s/^\s*domains\s*=\s*//" | sed 's/(\s*)\|,.*$//')
-	certFile="$letsencFolder/live/$primaryDomain/fullchain.pem"
-	expDate=$(date -d "$(openssl x509 -in "$certFile" -text -noout | grep "Not After" | cut -c 25-)" +%s)
-	expDays=$(echo \( "$expDate" - "$dateNow" \) / 86400 | bc)
+	primary_domain=$(grep "^\s*domains" "$configFile" | sed "s/^\s*domains\s*=\s*//" | sed 's/(\s*)\|,.*$//')
+	cert_file="$letsencrypt_folder/live/$primary_domain/fullchain.pem"
+	exp_date=$(date -d "$(openssl x509 -in "$cert_file" -text -noout | grep "Not After" | cut -c 25-)" +%s)
+	exp_days=$(echo \( "$exp_date" - "$date_now" \) / 86400 | bc)
 
 
 	echo "-------"
-	if [ "$expDays" -gt "$expLimit" ]
+	if [ "$exp_days" -gt "$exp_limit" ]
 	then
-		echo "The certificate for $primaryDomain is up to date, no need for renewal, $expDays days left."
+		echo "The certificate for $primary_domain is up to date, no need for renewal, $exp_days days left."
 	else
-		echo "Renewing cert for $primaryDomain using $configFile"
+		echo "Renewing cert for $primary_domain using $configFile"
 		../letsencrypt/letsencrypt-auto certonly --renew-by-default --config "$configFile"
 	fi
 
