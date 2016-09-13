@@ -53,7 +53,8 @@ echo ""
 mkdir -p "$install_dir"
 mkdir -p "$socket_dir"
 chown -R "$user_name":www-data "$base_dir"
-chmod -R 750 "$base_dir"
+chmod -R 710 "$base_dir"
+chmod -R 750 "$base_dir"/wp-content
 chmod -R g+s "$base_dir"
 
 echo "Installing Wordpress"
@@ -61,7 +62,7 @@ echo "Installing Wordpress"
 su - "$user_name" -c "
 cd '$install_dir'
 wp core download --locale=sv_SE
-wp core config --dbname='$user_name' --dbuser=$user_name --dbpass='$user_password' --locale=sv_SE
+echo \"define('WP_TEMP_DIR', '/srv/$user_name/wordpress/wp-content/tmp-upload');\" | wp core config --extra-php --dbname='$user_name' --dbuser=$user_name --dbpass='$user_password' --locale=sv_SE
 wp core install --url='$protocol://$FQDN' --title='$user_name website' --admin_user='$adminUser' --admin_password='$wp_admin_password' --admin_email='$adminMail'"
 
 # Installing AD plugin for Wordpress
