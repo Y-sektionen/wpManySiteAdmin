@@ -30,7 +30,7 @@ email = $adminMail
 
 # Uncomment and update to generate certificates for the specified
 # domains.
-domains = $FQDN
+domains = $FQDN,www.$FQDN
 
 # Uncomment to use the webroot authenticator. Replace webroot-path with the
 # path to the public_html / webroot folder being served by your web server.
@@ -47,5 +47,3 @@ chown -R root $basePath/$userName/wordpress/.well-known
 
 # Run letsencrypt and get cert
 ../letsencrypt/letsencrypt-auto certonly --renew-by-default --config $configFile
-
-

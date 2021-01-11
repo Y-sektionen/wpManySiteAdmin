@@ -25,7 +25,7 @@ touch $configFile
 cat > $configFile << EOF
 server {
 	listen 80;
-	server_name $FQDN *.$FQDN;
+	server_name $FQDN www.$FQDN;
 	
 	root $basePath/$userName/wordpress;
 	
@@ -53,9 +53,9 @@ echo ""
 # SSL conf
 cat >> $configFile << EOF
 server {
-	listen 443;
-	server_name $FQDN;
-	ssl on;
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
+	server_name $FQDN www.$FQDN;
 	
 	ssl_certificate /etc/letsencrypt/live/$FQDN/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/$FQDN/privkey.pem;
@@ -106,5 +106,4 @@ server {
 EOF
 
 # Activate site
-service nginx reload
-
+systemctl reload nginx.service

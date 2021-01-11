@@ -21,7 +21,7 @@ installDir=$baseDir/wordpress
 socketDir=$baseDir/socket
 
 # Create user in Linux and MySQL
-useradd -p $(echo $userPassword | openssl passwd -1 -stdin) $userName
+useradd -p $(echo $userPassword | openssl passwd -1 -stdin) -d $baseDir $userName
 
 echo "Please enter root password for MYSQL"
 mysql --user=root -p -e "create database $userName;
@@ -49,7 +49,7 @@ echo ""
 
 # Create config files for nginx and uwsgi
 ./nginx.bash $userName $FQDN
-./php5-fpm.bash $userName $FQDN
+./php7.3-fpm.bash $userName $FQDN
 
 echo ""
 echo "This is the password for MySQL- and system user $userName:"
@@ -59,4 +59,3 @@ echo ""
 echo "This is the password for WP-administrator-user $adminUser:"
 echo $wpAdminPassword
 echo ""
-

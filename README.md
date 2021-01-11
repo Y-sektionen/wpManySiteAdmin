@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 These scripts are dependent on these components
 
-* php5-fpm
+* php7.3-fpm
 * nginx
 * mysql
 * wp-cli
@@ -39,7 +39,7 @@ These scripts are dependent on these components
 To install most dependencies on Debian Stable:
 
 <pre>
-sudo apt-get install php5-cli php5-fpm nginx php5-ldap mysql-server php5-mysql ruby ruby-dev libcurl4-gnutls-dev make golang
+sudo apt install php7.3-cli php7.3-fpm nginx mariadb-server php7.3-mysql ruby ruby-dev libcurl4-gnutls-dev make golang bundler ruby-ffi zlib1g-dev php7.3-curl
 </pre>
 
 **wp-cli**
@@ -62,6 +62,7 @@ cd wpManySiteAdmin
 Complete the installation of wp-scan:
 
 <pre>
+gem install bundler
 cd scan/wpscan
 bundle install --without test --path vendor/bundle
 </pre>
